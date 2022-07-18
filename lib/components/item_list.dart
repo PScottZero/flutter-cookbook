@@ -1,15 +1,20 @@
-import 'package:cookbook/components/item_pill.dart';
-import 'package:cookbook/constants/view_constants.dart';
 import 'package:flutter/material.dart';
+
+import '../constants/view_constants.dart';
+import 'item_pill.dart';
 
 class ItemList extends StatelessWidget {
   final String title;
   final List items;
+  final Color primaryColor;
+  final Color accentColor;
 
   const ItemList({
     Key? key,
     required this.title,
     required this.items,
+    required this.primaryColor,
+    required this.accentColor,
   }) : super(key: key);
 
   @override
@@ -22,9 +27,11 @@ class ItemList extends StatelessWidget {
         ),
       ),
       initiallyExpanded: true,
-      collapsedTextColor: Colors.white,
-      collapsedIconColor: Colors.white,
-      collapsedBackgroundColor: ViewConstants.primaryColor,
+      textColor: primaryColor,
+      iconColor: primaryColor,
+      collapsedTextColor: accentColor,
+      collapsedIconColor: accentColor,
+      collapsedBackgroundColor: primaryColor,
       children: items.map((item) => ItemPill(item: item)).toList(),
     );
   }

@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
-
-import '../constants/view_constants.dart';
+import 'package:flutter/services.dart';
 
 class CustomScaffold extends StatelessWidget {
   final String title;
   final Widget body;
+  final Color appBarColor;
+  final Color appBarTextColor;
+  final Color backgroundColor;
+  final List<Widget>? appBarActions;
   final Widget? floatingActionButton;
   final Widget? bottomNavigationBar;
 
@@ -12,6 +15,10 @@ class CustomScaffold extends StatelessWidget {
     Key? key,
     required this.title,
     required this.body,
+    required this.appBarColor,
+    required this.appBarTextColor,
+    required this.backgroundColor,
+    this.appBarActions,
     this.floatingActionButton,
     this.bottomNavigationBar,
   }) : super(key: key);
@@ -20,13 +27,22 @@ class CustomScaffold extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(title),
+        title: Text(
+          title,
+          style: TextStyle(color: appBarTextColor),
+        ),
         centerTitle: true,
+        elevation: 0,
+        backgroundColor: appBarColor,
+        systemOverlayStyle: SystemUiOverlayStyle(
+          statusBarColor: appBarColor,
+        ),
+        actions: appBarActions,
       ),
-      backgroundColor: ViewConstants.accentColor,
-      body: body,
+      backgroundColor: backgroundColor,
       floatingActionButton: floatingActionButton,
       bottomNavigationBar: bottomNavigationBar,
+      body: body,
     );
   }
 }

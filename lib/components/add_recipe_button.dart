@@ -4,16 +4,30 @@ import '../constants/view_constants.dart';
 import '../views/edit_recipe_view.dart';
 
 class AddRecipeButton extends StatelessWidget {
-  const AddRecipeButton({Key? key}) : super(key: key);
+  final Color backgroundColor;
+  final Color textColor;
+
+  const AddRecipeButton({
+    Key? key,
+    required this.backgroundColor,
+    required this.textColor,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return FloatingActionButton.extended(
-      label: const Text(
+      backgroundColor: backgroundColor,
+      label: Text(
         'Add Recipe',
-        style: TextStyle(fontSize: ViewConstants.smallFont),
+        style: TextStyle(
+          fontSize: ViewConstants.smallFont,
+          color: textColor,
+        ),
       ),
-      icon: const Icon(Icons.add),
+      icon: Icon(
+        Icons.add,
+        color: textColor,
+      ),
       onPressed: () => Navigator.push(
         context,
         MaterialPageRoute(

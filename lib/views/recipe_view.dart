@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../components/custom_scaffold.dart';
 import '../components/image_carousel.dart';
 import '../components/item_list.dart';
+import '../model/app_model.dart';
 import '../model/recipe.dart';
 
 class RecipeView extends StatelessWidget {
@@ -15,22 +17,31 @@ class RecipeView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CustomScaffold(
-      title: recipe.name,
-      body: ListView(
-        children: [
-          recipe.images.isNotEmpty
-              ? ImageCarousel(images: recipe.images)
-              : Container(),
-          ItemList(
-            title: 'Ingredients',
-            items: recipe.ingredients,
-          ),
-          ItemList(
-            title: 'Instructions',
-            items: recipe.instructions,
-          ),
-        ],
+    return Consumer<AppModel>(
+      builder: (context, model, child) => CustomScaffold(
+        title: recipe.name,
+        appBarColor: model.primaryColor,
+        appBarTextColor: model.accentColor,
+        backgroundColor: model.accentColor,
+        body: ListView(
+          children: [
+            recipe.images.isNotEmpty
+                ? ImageCarousel(images: recipe.images)
+                : Container(),
+            ItemList(
+              title: 'Ingredients',
+              items: recipe.ingredients,
+              primaryColor: model.primaryColor,
+              accentColor: model.accentColor,
+            ),
+            ItemList(
+              title: 'Instructions',
+              items: recipe.instructions,
+              primaryColor: model.primaryColor,
+              accentColor: model.accentColor,
+            ),
+          ],
+        ),
       ),
     );
   }

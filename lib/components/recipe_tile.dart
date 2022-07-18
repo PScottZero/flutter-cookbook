@@ -1,15 +1,20 @@
 import 'dart:convert';
 
-import 'package:cookbook/views/recipe_view.dart';
 import 'package:flutter/material.dart';
 
 import '../constants/view_constants.dart';
 import '../model/recipe.dart';
+import '../views/recipe_view.dart';
 
 class RecipeTile extends StatelessWidget {
   final Recipe recipe;
+  final Color primaryColor;
 
-  const RecipeTile(this.recipe, {Key? key}) : super(key: key);
+  const RecipeTile({
+    Key? key,
+    required this.recipe,
+    required this.primaryColor,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -24,9 +29,9 @@ class RecipeTile extends StatelessWidget {
         alignment: Alignment.bottomCenter,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(ViewConstants.largeBorderRadius),
-          boxShadow: const [
+          boxShadow: [
             BoxShadow(
-              color: Color(0x77000000),
+              color: primaryColor,
               spreadRadius: 0,
               blurRadius: 8,
             ),

@@ -1,8 +1,12 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:cookbook/model/meal_type.dart';
+import 'package:cookbook/model/theme_options.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'example_recipes.dart';
 import 'recipe.dart';
@@ -24,22 +28,38 @@ List<Recipe> loadRecipesFromAppDirectory(String appDirectory) {
 
 class AppModel extends ChangeNotifier {
   List<Recipe> recipes = [];
-  bool loading = false;
+  MaterialColor theme = Colors.teal;
+  Color get primaryColor => theme[300]!;
+  Color get accentColor => theme[50]!;
 
   AppModel() {
     loadTestRecipes();
+    loadTheme();
   }
 
   void loadRecipes() async {
-    loading = true;
     final appDir = await getApplicationDocumentsDirectory();
     recipes = await compute(loadRecipesFromAppDirectory, appDir.path);
-    loading = false;
     notifyListeners();
+  }
+
+  void loadTheme() async {
+    final preferences = await SharedPreferences.getInstance();
+    theme = themeOptions[preferences.getInt('themeIndex') ?? 0];
   }
 
   void loadTestRecipes() async {
     recipes = await exampleRecipes;
+    notifyListeners();
+  }
+
+  List<Recipe> recipesByMealType(MealType mealType) =>
+      recipes.where((recipe) => recipe.mealTypes.contains(mealType)).toList();
+
+  void setTheme(MaterialColor materialColor) async {
+    theme = materialColor;
+    final preferences = await SharedPreferences.getInstance();
+    preferences.setInt('themeIndex', themeOptions.indexOf(theme));
     notifyListeners();
   }
 }

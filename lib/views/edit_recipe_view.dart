@@ -1,6 +1,8 @@
-import 'package:cookbook/components/custom_scaffold.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import '../components/custom_scaffold.dart';
+import '../model/app_model.dart';
 import '../model/recipe.dart';
 
 class EditRecipeView extends StatefulWidget {
@@ -33,6 +35,14 @@ class _EditRecipeViewState extends State<EditRecipeView> {
 
   @override
   Widget build(BuildContext context) {
-    return CustomScaffold(title: title, body: Container());
+    return Consumer<AppModel>(
+      builder: (context, model, child) => CustomScaffold(
+        title: title,
+        appBarColor: model.primaryColor,
+        appBarTextColor: model.accentColor,
+        backgroundColor: model.accentColor,
+        body: Container(),
+      ),
+    );
   }
 }

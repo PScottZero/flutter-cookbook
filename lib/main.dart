@@ -1,17 +1,11 @@
-import 'package:cookbook/constants/view_constants.dart';
-import 'package:cookbook/model/app_model.dart';
-import 'package:cookbook/views/all_recipes_view.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
+import 'model/app_model.dart';
+import 'views/all_recipes_view.dart';
+
 void main() {
-  SystemChrome.setSystemUIOverlayStyle(
-    const SystemUiOverlayStyle(
-      systemNavigationBarColor: ViewConstants.primaryColor,
-    ),
-  );
   runApp(
     ChangeNotifierProvider(
       create: (context) => AppModel(),
@@ -25,13 +19,16 @@ class Cookbook extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Cookbook',
-      theme: ThemeData(
-        fontFamily: GoogleFonts.comfortaa().fontFamily,
-        primarySwatch: ViewConstants.primaryColor,
+    return Consumer<AppModel>(
+      builder: (context, model, child) => MaterialApp(
+        title: 'Cookbook',
+        theme: ThemeData(
+          fontFamily: GoogleFonts.comfortaa().fontFamily,
+          primarySwatch: model.theme,
+        ),
+        debugShowCheckedModeBanner: false,
+        home: const AllRecipesView(),
       ),
-      home: const AllRecipesView(),
     );
   }
 }

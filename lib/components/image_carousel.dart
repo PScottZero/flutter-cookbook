@@ -14,6 +14,7 @@ class ImageCarousel extends StatelessWidget {
       options: CarouselOptions(
         height: 400,
         viewportFraction: 1.0,
+        aspectRatio: 1,
       ),
       items: images
           .map(

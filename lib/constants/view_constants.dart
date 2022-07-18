@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 
 class ViewConstants {
   // colors
-  static const MaterialColor primaryColor = Colors.teal;
-  static final Color accentColor = Colors.teal[200]!;
   static const Color imageTextBackgroundColor = Color(0x77000000);
 
   // text
