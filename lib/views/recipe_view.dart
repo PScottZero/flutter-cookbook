@@ -1,8 +1,7 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 
 import '../components/custom_scaffold.dart';
+import '../components/image_carousel.dart';
 import '../components/item_list.dart';
 import '../model/recipe.dart';
 
@@ -20,7 +19,9 @@ class RecipeView extends StatelessWidget {
       title: recipe.name,
       body: ListView(
         children: [
-          Image.memory(base64Decode(recipe.images[0])),
+          recipe.images.isNotEmpty
+              ? ImageCarousel(images: recipe.images)
+              : Container(),
           ItemList(
             title: 'Ingredients',
             items: recipe.ingredients,

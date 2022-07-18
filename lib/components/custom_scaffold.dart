@@ -5,11 +5,15 @@ import '../constants/view_constants.dart';
 class CustomScaffold extends StatelessWidget {
   final String title;
   final Widget body;
+  final Widget? floatingActionButton;
+  final Widget? bottomNavigationBar;
 
   const CustomScaffold({
     Key? key,
     required this.title,
     required this.body,
+    this.floatingActionButton,
+    this.bottomNavigationBar,
   }) : super(key: key);
 
   @override
@@ -21,6 +25,8 @@ class CustomScaffold extends StatelessWidget {
       ),
       backgroundColor: ViewConstants.accentColor,
       body: body,
+      floatingActionButton: floatingActionButton,
+      bottomNavigationBar: bottomNavigationBar,
     );
   }
 }

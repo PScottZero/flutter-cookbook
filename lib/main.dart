@@ -2,10 +2,16 @@ import 'package:cookbook/constants/view_constants.dart';
 import 'package:cookbook/model/app_model.dart';
 import 'package:cookbook/views/all_recipes_view.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 void main() {
+  SystemChrome.setSystemUIOverlayStyle(
+    const SystemUiOverlayStyle(
+      systemNavigationBarColor: ViewConstants.primaryColor,
+    ),
+  );
   runApp(
     ChangeNotifierProvider(
       create: (context) => AppModel(),

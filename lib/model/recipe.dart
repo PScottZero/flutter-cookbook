@@ -21,6 +21,13 @@ class Recipe {
     this.images = const [],
   });
 
+  Recipe.empty()
+      : name = '',
+        mealTypes = [],
+        ingredients = [],
+        instructions = [],
+        images = [];
+
   factory Recipe.fromJson(Map<String, dynamic> json) => _$RecipeFromJson(json);
 
   Map<String, dynamic> toJson() => _$RecipeToJson(this);

@@ -21,8 +21,16 @@ class RecipeTile extends StatelessWidget {
         ),
       ),
       child: Container(
+        alignment: Alignment.bottomCenter,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(ViewConstants.largeBorderRadius),
+          boxShadow: const [
+            BoxShadow(
+              color: Color(0x77000000),
+              spreadRadius: 0,
+              blurRadius: 8,
+            ),
+          ],
           image: DecorationImage(
             image: recipe.images.isNotEmpty
                 ? Image.memory(base64Decode(recipe.images[0])).image
