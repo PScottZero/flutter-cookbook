@@ -1,3 +1,4 @@
+import 'package:cookbook/views/edit_recipe_view.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -23,6 +24,23 @@ class RecipeView extends StatelessWidget {
         appBarColor: model.primaryColor,
         appBarTextColor: model.accentColor,
         backgroundColor: model.accentColor,
+        appBarActions: [
+          IconButton(
+            onPressed: () => Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => EditRecipeView(
+                  recipe: recipe,
+                  edit: true,
+                ),
+              ),
+            ),
+            icon: Icon(
+              Icons.edit,
+              color: model.accentColor,
+            ),
+          ),
+        ],
         body: ListView(
           children: [
             recipe.images.isNotEmpty

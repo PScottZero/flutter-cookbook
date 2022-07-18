@@ -6,6 +6,7 @@ import 'package:cookbook/model/theme_options.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'example_recipes.dart';
@@ -86,5 +87,66 @@ class AppModel extends ChangeNotifier {
     final preferences = await SharedPreferences.getInstance();
     preferences.setInt('themeIndex', themeOptions.indexOf(theme));
     notifyListeners();
+  }
+
+  Future<void> addRecipe(Recipe recipe) async {
+    recipes.add(recipe);
+    final directory = (await getApplicationDocumentsDirectory()).path;
+    final file = File('$directory/coins/${recipe.id}.json');
+    if (!file.existsSync()) {
+      file.createSync();
+    }
+    file.writeAsStringSync(jsonEncode(recipe));
+    notifyListeners();
+  }
+
+  Future<void> deleteRecipe(Recipe recipe) async {
+    recipes.remove(recipe);
+    final directory = (await getApplicationDocumentsDirectory()).path;
+    final file = File('$directory/recipes/${recipe.id}.json');
+    file.deleteSync();
+    notifyListeners();
+  }
+
+  Future<String> backupRecipes() async {
+    if (await Permission.manageExternalStorage.request().isGranted) {
+      final directory = Directory('/storage/emulated/0/Documents/CookbookBU/');
+      if (directory.existsSync()) {
+        directory.deleteSync(recursive: true);
+      }
+      directory.createSync();
+      for (var recipe in recipes) {
+        final file = File(
+            '/storage/emulated/0/Documents/NumismaticBU/${recipe.id}.json');
+        file.createSync();
+        file.writeAsStringSync(jsonEncode(recipe));
+      }
+      return 'Successfully backed up recipes';
+    }
+    return 'Permissions error';
+  }
+
+  Future<String> restoreRecipes() async {
+    if (await Permission.manageExternalStorage.request().isGranted) {
+      final backupDirectory =
+          Directory('/storage/emulated/0/Documents/NumismaticBU/');
+      if (!backupDirectory.existsSync()) {
+        return 'No backup found';
+      }
+      while (recipes.isNotEmpty) {
+        await deleteRecipe(recipes[0]);
+      }
+      var recipeFiles = backupDirectory.listSync();
+      if (recipeFiles.isNotEmpty) {
+        for (var recipeFile in recipeFiles) {
+          final recipeJson =
+              jsonDecode(File(recipeFile.path).readAsStringSync());
+          await addRecipe(Recipe.fromJson(recipeJson));
+        }
+      }
+      notifyListeners();
+      return 'Successfully restored coins';
+    }
+    return 'Permissions error';
   }
 }

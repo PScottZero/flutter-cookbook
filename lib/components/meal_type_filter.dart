@@ -1,6 +1,7 @@
 import 'package:cookbook/components/meal_type_pill.dart';
 import 'package:flutter/material.dart';
 
+import '../constants/view_constants.dart';
 import '../model/meal_type.dart';
 
 class MealTypeFilter extends StatelessWidget {
@@ -9,9 +10,13 @@ class MealTypeFilter extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 60,
+      height: ViewConstants.buttonHeight,
       child: ListView(
         scrollDirection: Axis.horizontal,
+        padding: const EdgeInsets.only(
+          left: 5,
+          right: 5,
+        ),
         children: const [
           MealTypePill(
             mealType: MealType.breakfast,

@@ -1,3 +1,4 @@
+import 'package:cookbook/components/backup_restore.dart';
 import 'package:cookbook/components/theme_chooser.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -16,6 +17,7 @@ class SettingsView extends StatelessWidget {
         body: ListView(
           children: [
             ThemeChooser(selectedTheme: model.theme),
+            BackupRestore(backupButtonColor: model.theme),
           ],
         ),
         appBarColor: model.primaryColor,

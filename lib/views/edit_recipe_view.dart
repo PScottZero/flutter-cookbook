@@ -41,7 +41,14 @@ class _EditRecipeViewState extends State<EditRecipeView> {
         appBarColor: model.primaryColor,
         appBarTextColor: model.accentColor,
         backgroundColor: model.accentColor,
-        body: Container(),
+        body: Column(
+          children: [
+            ReorderableListView(
+              children: _recipe.ingredients.map((ingredient) => ),
+              onReorder: onReorder,
+            ),
+          ],
+        ),
       ),
     );
   }

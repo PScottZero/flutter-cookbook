@@ -20,6 +20,7 @@ dependencies:
   provider: ^6.0.3
   shared_preferences: ^2.0.15
   uuid: ^3.0.4
+  permission_handler: ^10.0.0
 
 dev_dependencies:
   flutter_test:
@@ -30,18 +31,19 @@ dev_dependencies:
 flutter:
   uses-material-design: true
   assets:
-    - assets/icon.png
-    - assets/icon-background.png
-    - assets/icon-foreground.png
-    - assets/no-image.png
-    - assets/pizza-sauce-1.jpg
-    - assets/pizza-sauce-2.jpg
-    - assets/vanilla-ice-cream-1.jpg
-    - assets/vanilla-ice-cream-2.jpg
+    - assets/fonts/
+    - assets/icons/icon.png
+    - assets/icons/icon-background.png
+    - assets/icons/icon-foreground.png
+    - assets/images/no-image.png
+    - assets/images/pizza-sauce-1.jpg
+    - assets/images/pizza-sauce-2.jpg
+    - assets/images/vanilla-ice-cream-1.jpg
+    - assets/images/vanilla-ice-cream-2.jpg
 
 flutter_icons:
   android: "launcher_icon"
   ios: true
-  image_path: "assets/icon.png"
-  adaptive_icon_background: "assets/icon-background.png"
-  adaptive_icon_foreground: "assets/icon-foreground.png"
+  image_path: "assets/icons/icon.png"
+  adaptive_icon_background: "assets/icons/icon-background.png"
+  adaptive_icon_foreground: "assets/icons/icon-foreground.png"

@@ -81,6 +81,6 @@ Future<List<Recipe>> get exampleRecipes async => [
     ];
 
 Future<String> loadImageBase64(String imageDir) async {
-  var byteData = await rootBundle.load('assets/$imageDir');
+  var byteData = await rootBundle.load('assets/images/$imageDir');
   return base64Encode(byteData.buffer.asUint8List());
 }

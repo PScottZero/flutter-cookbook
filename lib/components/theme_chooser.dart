@@ -24,7 +24,7 @@ class ThemeChooser extends StatelessWidget {
               ViewConstants.smallPadding,
             ),
             child: Text(
-              'Theme',
+              'Themes',
               style: TextStyle(
                 fontSize: ViewConstants.smallFont,
                 color: model.primaryColor,
@@ -32,7 +32,7 @@ class ThemeChooser extends StatelessWidget {
             ),
           ),
           SizedBox(
-            height: 400,
+            height: 320,
             child: GridView.count(
               crossAxisCount: 5,
               mainAxisSpacing: ViewConstants.smallPadding,
@@ -50,6 +50,9 @@ class ThemeChooser extends StatelessWidget {
                         decoration: BoxDecoration(
                           color: theme,
                           borderRadius: BorderRadius.circular(100),
+                          border: model.theme == theme
+                              ? Border.all(color: theme[900]!, width: 3)
+                              : Border.all(color: theme, width: 3),
                         ),
                       ),
                     ),

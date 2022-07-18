@@ -39,7 +39,7 @@ class RecipeTile extends StatelessWidget {
           image: DecorationImage(
             image: recipe.images.isNotEmpty
                 ? Image.memory(base64Decode(recipe.images[0])).image
-                : const AssetImage('assets/no-image.png'),
+                : const AssetImage('assets/images/no-image.png'),
             fit: BoxFit.cover,
           ),
         ),

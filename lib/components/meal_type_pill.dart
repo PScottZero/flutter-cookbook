@@ -17,6 +17,8 @@ class MealTypePill extends StatelessWidget {
         : '${string[0].toUpperCase()}${string.substring(1)}';
   }
 
+  MaterialStateProperty<T> msp<T>(T value) => MaterialStateProperty.all(value);
+
   const MealTypePill({
     Key? key,
     required this.mealType,
@@ -27,26 +29,40 @@ class MealTypePill extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Consumer<AppModel>(
-      builder: (context, model, child) => TextButton(
-        onPressed: () => model.toggleMealTypeFilter(mealType),
-        child: Container(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(100),
-            color: color[300],
-            border: model.mealTypeIsSelected(mealType)
-                ? Border.all(color: color[700]!, width: 3)
-                : Border.all(color: color[300]!, width: 3),
-          ),
-          padding: const EdgeInsets.all(ViewConstants.smallPadding),
-          child: Row(
-            children: [
-              Icon(icon, color: color[50], size: 18),
-              const SizedBox(width: 5),
-              Text(
-                mealTypeString,
-                style: TextStyle(color: color[50]),
+      builder: (context, model, child) => Container(
+        padding: const EdgeInsets.all(ViewConstants.smallPadding / 2),
+        child: TextButton(
+          onPressed: () => model.toggleMealTypeFilter(mealType),
+          style: ButtonStyle(
+            padding: msp(const EdgeInsets.all(ViewConstants.smallPadding)),
+            backgroundColor: msp(color[300]),
+            side: msp(
+              BorderSide(
+                color: color[model.mealTypeIsSelected(mealType) ? 700 : 300]!,
+                width: 3,
               ),
-            ],
+            ),
+            shape: msp(
+              RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(100),
+              ),
+            ),
+          ),
+          child: SizedBox(
+            height: 60,
+            child: Row(
+              children: [
+                Icon(icon, color: color[50], size: 18),
+                const SizedBox(width: 5),
+                Text(
+                  mealTypeString,
+                  style: TextStyle(
+                    color: color[50],
+                    fontSize: ViewConstants.smallFont,
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
