@@ -1,0 +1,45 @@
+name: cookbook
+description: A simple flutter cookbook app
+
+publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.17.1 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  cupertino_icons: ^1.0.2
+  google_fonts: ^3.0.1
+  carousel_slider: ^4.1.1
+  json_serializable: ^6.3.1
+  json_annotation: ^4.6.0
+  build_runner: ^2.2.0
+  path_provider: ^2.0.11
+  provider: ^6.0.3
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^2.0.0
+  flutter_launcher_icons: ^0.9.3
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/icon.png
+    - assets/icon-background.png
+    - assets/icon-foreground.png
+    - assets/no-image.png
+    - assets/pizza-sauce-1.jpg
+    - assets/pizza-sauce-2.jpg
+    - assets/vanilla-ice-cream-1.jpg
+    - assets/vanilla-ice-cream-2.jpg
+
+flutter_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/icon.png"
+  adaptive_icon_background: "assets/icon-background.png"
+  adaptive_icon_foreground: "assets/icon-foreground.png"
