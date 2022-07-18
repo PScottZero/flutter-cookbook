@@ -21,7 +21,7 @@ Recipe _$RecipeFromJson(Map<String, dynamic> json) => Recipe(
               ?.map((e) => e as String)
               .toList() ??
           const [],
-    );
+    )..id = json['id'] as String;
 
 Map<String, dynamic> _$RecipeToJson(Recipe instance) => <String, dynamic>{
       'name': instance.name,
@@ -30,6 +30,7 @@ Map<String, dynamic> _$RecipeToJson(Recipe instance) => <String, dynamic>{
       'ingredients': instance.ingredients,
       'instructions': instance.instructions,
       'images': instance.images,
+      'id': instance.id,
     };
 
 const _$MealTypeEnumMap = {

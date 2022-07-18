@@ -37,7 +37,11 @@ class ThemeChooser extends StatelessWidget {
               crossAxisCount: 5,
               mainAxisSpacing: ViewConstants.smallPadding,
               crossAxisSpacing: ViewConstants.smallPadding,
-              padding: const EdgeInsets.all(ViewConstants.smallPadding),
+              padding: const EdgeInsets.only(
+                left: ViewConstants.smallPadding,
+                right: ViewConstants.smallPadding,
+                bottom: ViewConstants.smallPadding,
+              ),
               children: themeOptions
                   .map(
                     (theme) => GestureDetector(

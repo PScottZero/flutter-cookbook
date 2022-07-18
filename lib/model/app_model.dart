@@ -28,6 +28,22 @@ List<Recipe> loadRecipesFromAppDirectory(String appDirectory) {
 
 class AppModel extends ChangeNotifier {
   List<Recipe> recipes = [];
+  List<Recipe> get filteredRecipes {
+    var filtered = recipes.where(
+      (recipe) {
+        for (var mealType in filters) {
+          if (!recipe.mealTypes.contains(mealType)) {
+            return false;
+          }
+        }
+        return true;
+      },
+    ).toList();
+    filtered.sort((a, b) => a.name.compareTo(b.name));
+    return filtered;
+  }
+
+  List<MealType> filters = [];
   MaterialColor theme = Colors.teal;
   Color get primaryColor => theme[300]!;
   Color get accentColor => theme[50]!;
@@ -55,6 +71,15 @@ class AppModel extends ChangeNotifier {
 
   List<Recipe> recipesByMealType(MealType mealType) =>
       recipes.where((recipe) => recipe.mealTypes.contains(mealType)).toList();
+
+  void toggleMealTypeFilter(MealType mealType) {
+    mealTypeIsSelected(mealType)
+        ? filters.remove(mealType)
+        : filters.add(mealType);
+    notifyListeners();
+  }
+
+  bool mealTypeIsSelected(MealType mealType) => filters.contains(mealType);
 
   void setTheme(MaterialColor materialColor) async {
     theme = materialColor;

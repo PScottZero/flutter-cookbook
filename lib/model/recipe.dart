@@ -1,4 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
+import 'package:uuid/uuid.dart';
 
 import 'ingredient.dart';
 import 'meal_type.dart';
@@ -12,6 +13,8 @@ class Recipe {
   List<Ingredient> ingredients;
   List<String> instructions;
   List<String> images;
+
+  String id = const Uuid().v1();
 
   Recipe({
     required this.name,

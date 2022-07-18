@@ -38,6 +38,7 @@ class CustomScaffold extends StatelessWidget {
           statusBarColor: appBarColor,
         ),
         actions: appBarActions,
+        iconTheme: IconThemeData(color: appBarTextColor),
       ),
       backgroundColor: backgroundColor,
       floatingActionButton: floatingActionButton,

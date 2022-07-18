@@ -1,12 +1,12 @@
-import 'package:cookbook/components/recipe_grid.dart';
-import 'package:cookbook/model/meal_type.dart';
+import 'package:cookbook/components/meal_type_filter.dart';
 import 'package:cookbook/views/settings_view.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../components/add_recipe_button.dart';
 import '../components/custom_scaffold.dart';
-import '../components/custom_bottom_navigation_bar.dart';
+import '../components/recipe_tile.dart';
+import '../constants/view_constants.dart';
 import '../model/app_model.dart';
 
 class AllRecipesView extends StatefulWidget {
@@ -17,18 +17,6 @@ class AllRecipesView extends StatefulWidget {
 }
 
 class _AllRecipesViewState extends State<AllRecipesView> {
-  int _selectedIndex = 0;
-  final List<Widget> _recipeCategories = [
-    const RecipeGrid(mealType: MealType.breakfast),
-    const RecipeGrid(mealType: MealType.lunch),
-    const RecipeGrid(mealType: MealType.dinner),
-    const RecipeGrid(mealType: MealType.dessert),
-    const RecipeGrid(mealType: MealType.snack),
-    const RecipeGrid(mealType: MealType.drink),
-  ];
-
-  void _onNavBarTap(int index) => setState(() => _selectedIndex = index);
-
   @override
   Widget build(BuildContext context) {
     return Consumer<AppModel>(
@@ -52,17 +40,34 @@ class _AllRecipesViewState extends State<AllRecipesView> {
           appBarColor: model.primaryColor,
           appBarTextColor: model.accentColor,
           backgroundColor: model.accentColor,
-          body: _recipeCategories[_selectedIndex],
+          body: Consumer<AppModel>(
+            builder: (context, model, child) => Column(
+              children: [
+                const SizedBox(height: ViewConstants.smallPadding),
+                const MealTypeFilter(),
+                Expanded(
+                  child: GridView.count(
+                    crossAxisCount: 2,
+                    childAspectRatio: 1,
+                    mainAxisSpacing: ViewConstants.smallPadding,
+                    crossAxisSpacing: ViewConstants.smallPadding,
+                    padding: const EdgeInsets.all(ViewConstants.smallPadding),
+                    children: model.filteredRecipes
+                        .map(
+                          (recipe) => RecipeTile(
+                            recipe: recipe,
+                            primaryColor: const Color(0x77000000),
+                          ),
+                        )
+                        .toList(),
+                  ),
+                ),
+              ],
+            ),
+          ),
           floatingActionButton: AddRecipeButton(
             backgroundColor: model.primaryColor,
             textColor: model.accentColor,
-          ),
-          bottomNavigationBar: CustomBottomNavigationBar(
-            onTap: _onNavBarTap,
-            selectedIndex: _selectedIndex,
-            backgroundColor: model.primaryColor,
-            fixedColor: model.accentColor,
-            activeIconColor: model.accentColor,
           ),
         );
       },
