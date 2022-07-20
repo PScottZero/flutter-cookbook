@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 
 import '../constants/view_constants.dart';
 
-class EditableInstructionPill extends StatelessWidget {
-  const EditableInstructionPill({Key? key}) : super(key: key);
+class RoundedContainer extends StatelessWidget {
+  final Widget child;
+
+  const RoundedContainer({Key? key, required this.child}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -17,13 +19,7 @@ class EditableInstructionPill extends StatelessWidget {
         ),
         color: Colors.white,
       ),
-      child: Text(
-        '$item',
-        textAlign: TextAlign.center,
-        style: const TextStyle(
-          fontSize: ViewConstants.smallFont,
-        ),
-      ),
+      child: child,
     );
   }
 }

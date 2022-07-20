@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:cookbook/model/meal_type.dart';
-import 'package:cookbook/model/theme_options.dart';
+import 'package:cookbook/constants/theme_options.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
@@ -62,7 +62,7 @@ class AppModel extends ChangeNotifier {
 
   void loadTheme() async {
     final preferences = await SharedPreferences.getInstance();
-    theme = themeOptions[preferences.getInt('themeIndex') ?? 0];
+    theme = themeOptions[preferences.getInt('themeIndex') ?? 6];
   }
 
   void loadTestRecipes() async {
@@ -149,4 +149,6 @@ class AppModel extends ChangeNotifier {
     }
     return 'Permissions error';
   }
+
+  void refresh() => notifyListeners();
 }

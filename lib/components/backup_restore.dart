@@ -20,12 +20,7 @@ class BackupRestore extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
-            padding: const EdgeInsets.fromLTRB(
-              ViewConstants.smallPadding,
-              ViewConstants.smallPadding,
-              ViewConstants.smallPadding,
-              ViewConstants.smallPadding / 2,
-            ),
+            padding: const EdgeInsets.all(ViewConstants.smallPadding),
             child: Text(
               'Backup/Restore',
               style: TextStyle(

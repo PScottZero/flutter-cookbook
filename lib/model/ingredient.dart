@@ -1,5 +1,6 @@
 import 'package:json_annotation/json_annotation.dart';
 
+import '../constants/functions.dart';
 import 'unit.dart';
 
 part 'ingredient.g.dart';
@@ -18,6 +19,8 @@ class Ingredient {
     this.customUnit = '',
   });
 
+  Ingredient.empty() : this(name: '', amount: '');
+
   @override
   String toString() {
     if (unit != Unit.none) {
@@ -26,10 +29,10 @@ class Ingredient {
           unit != Unit.ml &&
           unit != Unit.g &&
           unit != Unit.custom;
-      var unitStr = unit == Unit.custom ? customUnit : unit.name;
+      var unitStr = capitalize(unit == Unit.custom ? customUnit : unit.name);
       return plural
-          ? '$amount ${unitStr}s of $name'
-          : '$amount $unitStr of $name';
+          ? '$amount ${unitStr}s of ${capitalizeAllWords(name)}'
+          : '$amount $unitStr of ${capitalizeAllWords(name)}';
     } else {
       var plural = amount != '1';
       return plural ? '$amount ${name}s' : '$amount $name';

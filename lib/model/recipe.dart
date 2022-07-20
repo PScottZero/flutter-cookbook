@@ -31,6 +31,14 @@ class Recipe {
         instructions = [],
         images = [];
 
+  Recipe clone() => Recipe(
+        name: name,
+        mealTypes: mealTypes,
+        ingredients: ingredients,
+        instructions: instructions,
+        images: images,
+      );
+
   factory Recipe.fromJson(Map<String, dynamic> json) => _$RecipeFromJson(json);
 
   Map<String, dynamic> toJson() => _$RecipeToJson(this);

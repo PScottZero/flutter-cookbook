@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
 
 import '../constants/view_constants.dart';
-import 'item_pill.dart';
 
-class ItemList extends StatelessWidget {
+class CollapsibleList extends StatelessWidget {
   final String title;
-  final List items;
+  final List<Widget> items;
   final Color primaryColor;
   final Color accentColor;
 
-  const ItemList({
+  const CollapsibleList({
     Key? key,
     required this.title,
     required this.items,
@@ -32,7 +31,7 @@ class ItemList extends StatelessWidget {
       collapsedTextColor: accentColor,
       collapsedIconColor: accentColor,
       collapsedBackgroundColor: primaryColor,
-      children: items.map((item) => ItemPill(item: item)).toList(),
+      children: items,
     );
   }
 }

@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 
 import '../constants/view_constants.dart';
 
-class ItemListTitle extends StatelessWidget {
+class CollapsibleListTitle extends StatelessWidget {
   final String title;
   final Color color;
 
-  const ItemListTitle({
+  const CollapsibleListTitle({
     Key? key,
     required this.title,
     required this.color,

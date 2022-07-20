@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 
 import '../constants/view_constants.dart';
 import '../model/app_model.dart';
-import '../model/theme_options.dart';
+import '../constants/theme_options.dart';
 
 class ThemeChooser extends StatelessWidget {
   final MaterialColor selectedTheme;

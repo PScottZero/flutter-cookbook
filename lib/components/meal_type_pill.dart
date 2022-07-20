@@ -2,6 +2,7 @@ import 'package:cookbook/constants/view_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../constants/functions.dart';
 import '../model/app_model.dart';
 import '../model/meal_type.dart';
 
@@ -13,11 +14,9 @@ class MealTypePill extends StatelessWidget {
   String get mealTypeString {
     var string = mealType.name;
     return mealType == MealType.snack || mealType == MealType.drink
-        ? '${string[0].toUpperCase()}${string.substring(1)}s'
-        : '${string[0].toUpperCase()}${string.substring(1)}';
+        ? '${capitalize(string)}s'
+        : capitalize(string);
   }
-
-  MaterialStateProperty<T> msp<T>(T value) => MaterialStateProperty.all(value);
 
   const MealTypePill({
     Key? key,

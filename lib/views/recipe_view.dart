@@ -4,7 +4,8 @@ import 'package:provider/provider.dart';
 
 import '../components/custom_scaffold.dart';
 import '../components/image_carousel.dart';
-import '../components/item_list.dart';
+import '../components/collapsible_list.dart';
+import '../components/text_pill.dart';
 import '../model/app_model.dart';
 import '../model/recipe.dart';
 
@@ -46,15 +47,23 @@ class RecipeView extends StatelessWidget {
             recipe.images.isNotEmpty
                 ? ImageCarousel(images: recipe.images)
                 : Container(),
-            ItemList(
+            CollapsibleList(
               title: 'Ingredients',
-              items: recipe.ingredients,
+              items: recipe.ingredients
+                  .map(
+                    (ingredients) => TextPill(text: '$ingredients'),
+                  )
+                  .toList(),
               primaryColor: model.primaryColor,
               accentColor: model.accentColor,
             ),
-            ItemList(
+            CollapsibleList(
               title: 'Instructions',
-              items: recipe.instructions,
+              items: recipe.instructions
+                  .map(
+                    (instruction) => TextPill(text: instruction),
+                  )
+                  .toList(),
               primaryColor: model.primaryColor,
               accentColor: model.accentColor,
             ),

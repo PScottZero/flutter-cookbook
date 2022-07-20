@@ -9,14 +9,9 @@ import '../components/recipe_tile.dart';
 import '../constants/view_constants.dart';
 import '../model/app_model.dart';
 
-class AllRecipesView extends StatefulWidget {
+class AllRecipesView extends StatelessWidget {
   const AllRecipesView({Key? key}) : super(key: key);
 
-  @override
-  State<AllRecipesView> createState() => _AllRecipesViewState();
-}
-
-class _AllRecipesViewState extends State<AllRecipesView> {
   @override
   Widget build(BuildContext context) {
     return Consumer<AppModel>(
