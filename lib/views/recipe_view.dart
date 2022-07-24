@@ -27,10 +27,7 @@ class RecipeView extends StatelessWidget {
             onPressed: () => Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) {
-                  model.selectedRecipe = recipe.clone();
-                  return const EditRecipeView(edit: true);
-                },
+                builder: (context) => EditRecipeView(recipe: recipe),
               ),
             ),
             icon: Icon(
