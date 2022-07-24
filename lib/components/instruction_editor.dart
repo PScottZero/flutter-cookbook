@@ -3,9 +3,10 @@ import 'package:cookbook/components/rounded_container.dart';
 import 'package:flutter/material.dart';
 
 import '../constants/view_constants.dart';
+import '../model/instruction.dart';
 
 class InstructionEditor extends StatefulWidget {
-  final String initialValue;
+  final Instruction instruction;
   final MaterialColor color;
   final Function() moveUp;
   final Function() moveDown;
@@ -13,7 +14,7 @@ class InstructionEditor extends StatefulWidget {
 
   const InstructionEditor({
     Key? key,
-    required this.initialValue,
+    required this.instruction,
     required this.color,
     required this.moveUp,
     required this.moveDown,
@@ -30,7 +31,7 @@ class _InstructionEditorState extends State<InstructionEditor> {
   @override
   void initState() {
     super.initState();
-    _textEditingController.text = widget.initialValue;
+    _textEditingController.text = widget.instruction.value;
   }
 
   @override

@@ -1,11 +1,11 @@
+import 'package:cookbook/model/instruction.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:reorderables/reorderables.dart';
 
-import '../components/collapsible_list.dart';
 import '../components/custom_scaffold.dart';
 import '../components/ingredient_editor.dart';
 import '../components/instruction_editor.dart';
-import '../components/rounded_button.dart';
 import '../model/app_model.dart';
 import '../model/recipe.dart';
 
@@ -56,80 +56,66 @@ class _EditRecipeViewState extends State<EditRecipeView> {
         ],
         body: ListView(
           children: [
-            CollapsibleList(
-              title: 'Ingredients',
-              primaryColor: model.primaryColor,
-              accentColor: model.accentColor,
-              items: model.selectedRecipe!.ingredients
-                      .asMap()
-                      .entries
-                      .map(
-                        (entry) => IngredientEditor(
-                          key: ValueKey(entry.key),
-                          ingredient: entry.value,
-                          color: model.theme,
-                          moveUp: () => setState(
-                            () => model.selectedRecipe!
-                                .moveIngredientUp(entry.key),
-                          ),
-                          moveDown: () => setState(
-                            () => model.selectedRecipe!
-                                .moveIngredientDown(entry.key),
-                          ),
-                          delete: () => setState(
-                            () => model.selectedRecipe!
-                                .deleteIngredient(entry.key),
-                          ),
-                        ),
-                      )
-                      .toList()
-                      .cast<Widget>() +
-                  [
-                    RoundedButton(
-                      text: 'Add Ingredient',
-                      color: model.theme,
-                      onPressed: () => setState(
-                        () => model.selectedRecipe!.addIngredient(),
+            ReorderableColumn(
+              header: const Text('Ingredients'),
+              onReorder: (oldIndex, newIndex) {},
+              children: <Widget>[
+                for (int index = 0; index < _recipe.ingredients.length; index++)
+                  IngredientEditor(
+                    key: ValueKey(index),
+                    ingredient: _recipe.ingredients[index],
+                    color: model.theme,
+                    moveUp: () => setState(
+                      () => _recipe.moveIngredientUp(
+                        _recipe.ingredients[index],
                       ),
-                    )
-                  ],
+                    ),
+                    moveDown: () => setState(
+                      () => _recipe.moveIngredientDown(
+                        _recipe.ingredients[index],
+                      ),
+                    ),
+                    delete: () => setState(
+                      () => _recipe.deleteIngredient(
+                        _recipe.ingredients[index],
+                      ),
+                    ),
+                  ),
+              ],
             ),
-            CollapsibleList(
-              title: 'Instructions',
-              items: model.selectedRecipe!.instructions
-                      .asMap()
-                      .entries
-                      .map(
-                        (entry) => InstructionEditor(
-                          initialValue: entry.value,
-                          color: model.theme,
-                          moveUp: () => setState(
-                            () => model.selectedRecipe!
-                                .moveInstructionUp(entry.key),
-                          ),
-                          moveDown: () => setState(
-                            () => model.selectedRecipe!
-                                .moveInstructionDown(entry.key),
-                          ),
-                          delete: () => setState(
-                            () => model.selectedRecipe!
-                                .deleteInstruction(entry.key),
-                          ),
-                        ),
-                      )
-                      .toList()
-                      .cast<Widget>() +
-                  [
-                    RoundedButton(
-                      text: 'Add Instruction',
-                      color: model.theme,
-                      onPressed: () => setState(
-                        () => model.selectedRecipe!.addInstruction(),
+            ReorderableColumn(
+              header: const Text('Instructions'),
+              onReorder: (oldIndex, newIndex) => setState(
+                () => _recipe.instructions.insert(
+                  newIndex,
+                  _recipe.instructions.removeAt(oldIndex),
+                ),
+              ),
+              children: <Widget>[
+                for (int index = 0;
+                    index < _recipe.instructions.length;
+                    index++)
+                  InstructionEditor(
+                    key: ValueKey(index),
+                    instruction: _recipe.instructions[index],
+                    color: model.theme,
+                    moveUp: () => setState(
+                      () => _recipe.moveInstructionUp(
+                        _recipe.instructions[index],
                       ),
-                    )
-                  ],
-              primaryColor: model.primaryColor,
-              accentColor: model.accentColor,
+                    ),
+                    moveDown: () => setState(
+                      () => _recipe.moveInstructionDown(
+                        _recipe.instructions[index],
+                      ),
+                    ),
+                    delete: () => setState(
+                      () => _recipe.deleteInstruction(
+                        _recipe.instructions[index],
+                      ),
+                    ),
+                  ),
+              ],
             ),
           ],
         ),

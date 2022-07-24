@@ -55,7 +55,7 @@ class RecipeView extends StatelessWidget {
               title: 'Instructions',
               items: recipe.instructions
                   .map(
-                    (instruction) => TextPill(text: instruction),
+                    (instruction) => TextPill(text: instruction.value),
                   )
                   .toList(),
               primaryColor: model.primaryColor,

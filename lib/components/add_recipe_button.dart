@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import '../constants/view_constants.dart';
 import '../model/app_model.dart';
-import '../model/recipe.dart';
 import '../views/edit_recipe_view.dart';
 
 class AddRecipeButton extends StatelessWidget {
@@ -35,10 +34,7 @@ class AddRecipeButton extends StatelessWidget {
       onPressed: () => Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) {
-            model.selectedRecipe = Recipe.empty();
-            return const EditRecipeView();
-          },
+          builder: (context) => const EditRecipeView(),
         ),
       ),
     );

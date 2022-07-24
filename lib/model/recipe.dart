@@ -2,6 +2,7 @@ import 'package:json_annotation/json_annotation.dart';
 import 'package:uuid/uuid.dart';
 
 import 'ingredient.dart';
+import 'instruction.dart';
 import 'meal_type.dart';
 
 part 'recipe.g.dart';
@@ -11,7 +12,7 @@ class Recipe {
   String name;
   List<MealType> mealTypes;
   List<Ingredient> ingredients;
-  List<String> instructions;
+  List<Instruction> instructions;
   List<String> images;
 
   String id = const Uuid().v1();
@@ -45,23 +46,33 @@ class Recipe {
 
   void addIngredient() => ingredients.add(Ingredient.empty());
 
-  void addInstruction() => instructions.add('');
+  void addInstruction() => instructions.add(Instruction());
 
-  void deleteIngredient(int index) => ingredients.removeAt(index);
+  void deleteIngredient(Ingredient ingredient) =>
+      ingredients.remove(ingredient);
 
-  void deleteInstruction(int index) => instructions.removeAt(index);
+  void deleteInstruction(Instruction instruction) =>
+      instructions.remove(instruction);
 
-  void moveIngredientUp(int index) =>
-      ingredients.insert(index - 1, ingredients.removeAt(index));
+  void moveIngredientUp(Ingredient ingredient) {
+    var index = ingredients.indexOf(ingredient);
+    ingredients.insert(index - 1, ingredients.removeAt(index));
+  }
 
-  void moveIngredientDown(int index) =>
-      ingredients.insert(index + 1, ingredients.removeAt(index));
+  void moveIngredientDown(Ingredient ingredient) {
+    var index = ingredients.indexOf(ingredient);
+    ingredients.insert(index + 1, ingredients.removeAt(index));
+  }
 
-  void moveInstructionUp(int index) =>
-      instructions.insert(index - 1, instructions.removeAt(index));
+  void moveInstructionUp(Instruction instruction) {
+    var index = instructions.indexOf(instruction);
+    instructions.insert(index - 1, instructions.removeAt(index));
+  }
 
-  void moveInstructionDown(int index) =>
-      instructions.insert(index + 1, instructions.removeAt(index));
+  void moveInstructionDown(Instruction instruction) {
+    var index = instructions.indexOf(instruction);
+    instructions.insert(index + 1, instructions.removeAt(index));
+  }
 
   factory Recipe.fromJson(Map<String, dynamic> json) => _$RecipeFromJson(json);
 

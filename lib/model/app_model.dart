@@ -44,7 +44,6 @@ class AppModel extends ChangeNotifier {
     return filtered;
   }
 
-  Recipe? selectedRecipe;
   List<MealType> filters = [];
   MaterialColor theme = Colors.teal;
   Color get primaryColor => theme[300]!;
