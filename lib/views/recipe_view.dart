@@ -12,10 +12,7 @@ import '../model/recipe.dart';
 class RecipeView extends StatelessWidget {
   final Recipe recipe;
 
-  const RecipeView({
-    Key? key,
-    required this.recipe,
-  }) : super(key: key);
+  const RecipeView({Key? key, required this.recipe}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +28,7 @@ class RecipeView extends StatelessWidget {
               context,
               MaterialPageRoute(
                 builder: (context) {
-                  model.selectedRecipe = recipe;
+                  model.selectedRecipe = recipe.clone();
                   return const EditRecipeView(edit: true);
                 },
               ),

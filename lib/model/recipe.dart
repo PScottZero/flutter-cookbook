@@ -31,13 +31,37 @@ class Recipe {
         instructions = [],
         images = [];
 
-  Recipe clone() => Recipe(
-        name: name,
-        mealTypes: mealTypes,
-        ingredients: ingredients,
-        instructions: instructions,
-        images: images,
-      );
+  Recipe clone() {
+    var clonedIngredients =
+        ingredients.map((ingredient) => ingredient.clone()).toList();
+    return Recipe(
+      name: name,
+      mealTypes: mealTypes,
+      ingredients: clonedIngredients,
+      instructions: instructions,
+      images: images,
+    );
+  }
+
+  void addIngredient() => ingredients.add(Ingredient.empty());
+
+  void addInstruction() => instructions.add('');
+
+  void deleteIngredient(int index) => ingredients.removeAt(index);
+
+  void deleteInstruction(int index) => instructions.removeAt(index);
+
+  void moveIngredientUp(int index) =>
+      ingredients.insert(index - 1, ingredients.removeAt(index));
+
+  void moveIngredientDown(int index) =>
+      ingredients.insert(index + 1, ingredients.removeAt(index));
+
+  void moveInstructionUp(int index) =>
+      instructions.insert(index - 1, instructions.removeAt(index));
+
+  void moveInstructionDown(int index) =>
+      instructions.insert(index + 1, instructions.removeAt(index));
 
   factory Recipe.fromJson(Map<String, dynamic> json) => _$RecipeFromJson(json);
 

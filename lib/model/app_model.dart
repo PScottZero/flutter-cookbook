@@ -153,6 +153,4 @@ class AppModel extends ChangeNotifier {
     preferences.setInt('themeIndex', themeOptions.indexOf(theme));
     notifyListeners();
   }
-
-  void refresh() => notifyListeners();
 }

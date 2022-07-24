@@ -8,11 +8,17 @@ import 'rounded_container.dart';
 class IngredientEditor extends StatefulWidget {
   final Ingredient ingredient;
   final MaterialColor color;
+  final Function() moveUp;
+  final Function() moveDown;
+  final Function() delete;
 
   const IngredientEditor({
     Key? key,
     required this.ingredient,
     required this.color,
+    required this.moveUp,
+    required this.moveDown,
+    required this.delete,
   }) : super(key: key);
 
   @override
@@ -62,9 +68,11 @@ class _IngredientEditorState extends State<IngredientEditor> {
           ),
           const SizedBox(height: ViewConstants.smallPadding / 2),
           MoveDelete(
-            index: (widget.key! as ValueKey).value,
             isIngredient: true,
             color: widget.color,
+            moveUp: widget.moveUp,
+            moveDown: widget.moveDown,
+            delete: widget.delete,
           ),
         ],
       ),

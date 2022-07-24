@@ -7,7 +7,6 @@ import '../components/ingredient_editor.dart';
 import '../components/instruction_editor.dart';
 import '../components/rounded_button.dart';
 import '../model/app_model.dart';
-import '../model/ingredient.dart';
 
 class EditRecipeView extends StatefulWidget {
   final bool edit;
@@ -30,14 +29,6 @@ class _EditRecipeViewState extends State<EditRecipeView> {
         : _model?.selectedRecipe?.name ?? '';
     return widget.edit ? 'Edit $recipeName' : 'New Recipe';
   }
-
-  void addIngredient() => setState(() {
-        _model?.selectedRecipe?.ingredients.add(Ingredient.empty());
-      });
-
-  void addInstruction() => setState(() {
-        _model?.selectedRecipe!.instructions.add('');
-      });
 
   @override
   Widget build(BuildContext context) {
@@ -72,6 +63,18 @@ class _EditRecipeViewState extends State<EditRecipeView> {
                             key: ValueKey(entry.key),
                             ingredient: entry.value,
                             color: model.theme,
+                            moveUp: () => setState(
+                              () => model.selectedRecipe!
+                                  .moveIngredientUp(entry.key),
+                            ),
+                            moveDown: () => setState(
+                              () => model.selectedRecipe!
+                                  .moveIngredientDown(entry.key),
+                            ),
+                            delete: () => setState(
+                              () => model.selectedRecipe!
+                                  .deleteIngredient(entry.key),
+                            ),
                           ),
                         )
                         .toList()
@@ -81,7 +84,9 @@ class _EditRecipeViewState extends State<EditRecipeView> {
                         key: ValueKey(model.selectedRecipe!.ingredients.length),
                         text: 'Add Ingredient',
                         color: model.theme,
-                        onPressed: addIngredient,
+                        onPressed: () => setState(
+                          () => model.selectedRecipe!.addIngredient(),
+                        ),
                       )
                     ],
               ),
@@ -95,6 +100,18 @@ class _EditRecipeViewState extends State<EditRecipeView> {
                             key: ValueKey(entry.key),
                             initialValue: entry.value,
                             color: model.theme,
+                            moveUp: () => setState(
+                              () => model.selectedRecipe!
+                                  .moveInstructionUp(entry.key),
+                            ),
+                            moveDown: () => setState(
+                              () => model.selectedRecipe!
+                                  .moveInstructionDown(entry.key),
+                            ),
+                            delete: () => setState(
+                              () => model.selectedRecipe!
+                                  .deleteInstruction(entry.key),
+                            ),
                           ),
                         )
                         .toList()
@@ -105,7 +122,9 @@ class _EditRecipeViewState extends State<EditRecipeView> {
                             ValueKey(model.selectedRecipe!.instructions.length),
                         text: 'Add Instruction',
                         color: model.theme,
-                        onPressed: addInstruction,
+                        onPressed: () => setState(
+                          () => model.selectedRecipe!.addInstruction(),
+                        ),
                       )
                     ],
                 primaryColor: model.primaryColor,

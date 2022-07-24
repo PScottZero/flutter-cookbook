@@ -7,11 +7,17 @@ import '../constants/view_constants.dart';
 class InstructionEditor extends StatefulWidget {
   final String initialValue;
   final MaterialColor color;
+  final Function() moveUp;
+  final Function() moveDown;
+  final Function() delete;
 
   const InstructionEditor({
     Key? key,
     required this.initialValue,
     required this.color,
+    required this.moveUp,
+    required this.moveDown,
+    required this.delete,
   }) : super(key: key);
 
   @override
@@ -45,9 +51,11 @@ class _InstructionEditorState extends State<InstructionEditor> {
           ),
           const SizedBox(height: ViewConstants.smallPadding / 2),
           MoveDelete(
-            index: (widget.key! as ValueKey).value,
             isIngredient: false,
             color: widget.color,
+            moveUp: widget.moveUp,
+            moveDown: widget.moveDown,
+            delete: widget.delete,
           ),
         ],
       ),

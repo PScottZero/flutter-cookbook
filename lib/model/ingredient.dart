@@ -21,6 +21,13 @@ class Ingredient {
 
   Ingredient.empty() : this(name: '', amount: '');
 
+  Ingredient clone() => Ingredient(
+        name: name,
+        amount: amount,
+        unit: unit,
+        customUnit: customUnit,
+      );
+
   @override
   String toString() {
     if (unit != Unit.none) {
