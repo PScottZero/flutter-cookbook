@@ -9,7 +9,6 @@ final List<MaterialColor> themeOptions = [
   Colors.green,
   Colors.teal,
   Colors.cyan,
-  Colors.lightBlue,
   Colors.blue,
   Colors.indigo,
   Colors.deepPurple,

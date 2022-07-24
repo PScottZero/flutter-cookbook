@@ -30,10 +30,10 @@ class RecipeView extends StatelessWidget {
             onPressed: () => Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => EditRecipeView(
-                  recipe: recipe,
-                  edit: true,
-                ),
+                builder: (context) {
+                  model.selectedRecipe = recipe;
+                  return const EditRecipeView(edit: true);
+                },
               ),
             ),
             icon: Icon(

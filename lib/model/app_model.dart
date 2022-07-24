@@ -44,6 +44,7 @@ class AppModel extends ChangeNotifier {
     return filtered;
   }
 
+  Recipe? selectedRecipe;
   List<MealType> filters = [];
   MaterialColor theme = Colors.teal;
   Color get primaryColor => theme[300]!;
@@ -82,14 +83,10 @@ class AppModel extends ChangeNotifier {
 
   bool mealTypeIsSelected(MealType mealType) => filters.contains(mealType);
 
-  void setTheme(MaterialColor materialColor) async {
-    theme = materialColor;
-    final preferences = await SharedPreferences.getInstance();
-    preferences.setInt('themeIndex', themeOptions.indexOf(theme));
-    notifyListeners();
-  }
-
   Future<void> addRecipe(Recipe recipe) async {
+    var index =
+        recipes.indexWhere((existingRecipe) => existingRecipe.id == recipe.id);
+    if (index >= 0) recipes.removeAt(index);
     recipes.add(recipe);
     final directory = (await getApplicationDocumentsDirectory()).path;
     final file = File('$directory/coins/${recipe.id}.json');
@@ -148,6 +145,13 @@ class AppModel extends ChangeNotifier {
       return 'Successfully restored coins';
     }
     return 'Permissions error';
+  }
+
+  void setTheme(MaterialColor materialColor) async {
+    theme = materialColor;
+    final preferences = await SharedPreferences.getInstance();
+    preferences.setInt('themeIndex', themeOptions.indexOf(theme));
+    notifyListeners();
   }
 
   void refresh() => notifyListeners();

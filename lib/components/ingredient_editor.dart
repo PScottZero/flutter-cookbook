@@ -1,4 +1,3 @@
-import 'package:cookbook/model/move_delete_functions.dart';
 import 'package:flutter/material.dart';
 
 import '../constants/view_constants.dart';
@@ -8,13 +7,11 @@ import 'rounded_container.dart';
 
 class IngredientEditor extends StatefulWidget {
   final Ingredient ingredient;
-  final MoveDeleteFunctions moveDeleteFunctions;
   final MaterialColor color;
 
   const IngredientEditor({
     Key? key,
     required this.ingredient,
-    required this.moveDeleteFunctions,
     required this.color,
   }) : super(key: key);
 
@@ -67,7 +64,6 @@ class _IngredientEditorState extends State<IngredientEditor> {
           MoveDelete(
             index: (widget.key! as ValueKey).value,
             isIngredient: true,
-            moveDeleteFunctions: widget.moveDeleteFunctions,
             color: widget.color,
           ),
         ],

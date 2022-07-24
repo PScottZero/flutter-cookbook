@@ -63,6 +63,7 @@ class AllRecipesView extends StatelessWidget {
           floatingActionButton: AddRecipeButton(
             backgroundColor: model.primaryColor,
             textColor: model.accentColor,
+            model: model,
           ),
         );
       },

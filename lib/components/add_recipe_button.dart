@@ -1,16 +1,20 @@
 import 'package:flutter/material.dart';
 
 import '../constants/view_constants.dart';
+import '../model/app_model.dart';
+import '../model/recipe.dart';
 import '../views/edit_recipe_view.dart';
 
 class AddRecipeButton extends StatelessWidget {
   final Color backgroundColor;
   final Color textColor;
+  final AppModel model;
 
   const AddRecipeButton({
     Key? key,
     required this.backgroundColor,
     required this.textColor,
+    required this.model,
   }) : super(key: key);
 
   @override
@@ -31,7 +35,10 @@ class AddRecipeButton extends StatelessWidget {
       onPressed: () => Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => const EditRecipeView(),
+          builder: (context) {
+            model.selectedRecipe = Recipe.empty();
+            return const EditRecipeView();
+          },
         ),
       ),
     );

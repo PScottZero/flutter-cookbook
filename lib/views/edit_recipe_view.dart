@@ -1,24 +1,20 @@
-import 'package:cookbook/components/ingredient_editor.dart';
-import 'package:cookbook/components/instruction_editor.dart';
-import 'package:cookbook/components/collapsible_list.dart';
-import 'package:cookbook/components/rounded_button.dart';
-import 'package:cookbook/model/ingredient.dart';
-import 'package:cookbook/model/move_delete_functions.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../components/collapsible_list.dart';
 import '../components/custom_scaffold.dart';
+import '../components/ingredient_editor.dart';
+import '../components/instruction_editor.dart';
+import '../components/rounded_button.dart';
 import '../model/app_model.dart';
-import '../model/recipe.dart';
+import '../model/ingredient.dart';
 
 class EditRecipeView extends StatefulWidget {
   final bool edit;
-  final Recipe? recipe;
 
   const EditRecipeView({
     Key? key,
     this.edit = false,
-    this.recipe,
   }) : super(key: key);
 
   @override
@@ -26,58 +22,22 @@ class EditRecipeView extends StatefulWidget {
 }
 
 class _EditRecipeViewState extends State<EditRecipeView> {
-  late Recipe _recipe;
-  late MoveDeleteFunctions _moveDeleteFunctions;
   AppModel? _model;
 
   String get title {
-    var recipeName = _recipe.name == '' ? 'Recipe' : _recipe.name;
+    var recipeName = _model?.selectedRecipe?.name == ''
+        ? 'Recipe'
+        : _model?.selectedRecipe?.name ?? '';
     return widget.edit ? 'Edit $recipeName' : 'New Recipe';
   }
 
-  @override
-  void initState() {
-    super.initState();
-    _recipe = widget.recipe?.clone() ?? Recipe.empty();
-    _moveDeleteFunctions = MoveDeleteFunctions(
-      moveUp: moveUp,
-      moveDown: moveDown,
-      delete: delete,
-    );
-  }
-
   void addIngredient() => setState(() {
-        _recipe.ingredients.add(Ingredient.empty());
+        _model?.selectedRecipe?.ingredients.add(Ingredient.empty());
       });
 
   void addInstruction() => setState(() {
-        _recipe.instructions.add('');
+        _model?.selectedRecipe!.instructions.add('');
       });
-
-  void moveUp(bool isIngredient, int index) {
-    swap(getList(isIngredient), index, index - 1);
-    _model?.refresh();
-  }
-
-  void moveDown(bool isIngredient, int index) {
-    swap(getList(isIngredient), index, index + 1);
-    _model?.refresh();
-  }
-
-  void delete(bool isIngredient, int index) => setState(() {
-        getList(isIngredient).removeAt(index);
-      });
-
-  List getList(bool isIngredient) =>
-      isIngredient ? _recipe.ingredients : _recipe.instructions;
-
-  void swap(List list, int index1, int index2) {
-    if (index2 >= 0 && index2 < list.length) {
-      var temp = list[index1];
-      list[index1] = list[index2];
-      list[index2] = temp;
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -104,14 +64,13 @@ class _EditRecipeViewState extends State<EditRecipeView> {
                 title: 'Ingredients',
                 primaryColor: model.primaryColor,
                 accentColor: model.accentColor,
-                items: _recipe.ingredients
+                items: model.selectedRecipe!.ingredients
                         .asMap()
                         .entries
                         .map(
                           (entry) => IngredientEditor(
                             key: ValueKey(entry.key),
                             ingredient: entry.value,
-                            moveDeleteFunctions: _moveDeleteFunctions,
                             color: model.theme,
                           ),
                         )
@@ -119,7 +78,7 @@ class _EditRecipeViewState extends State<EditRecipeView> {
                         .cast<Widget>() +
                     [
                       RoundedButton(
-                        key: ValueKey(_recipe.ingredients.length),
+                        key: ValueKey(model.selectedRecipe!.ingredients.length),
                         text: 'Add Ingredient',
                         color: model.theme,
                         onPressed: addIngredient,
@@ -128,14 +87,13 @@ class _EditRecipeViewState extends State<EditRecipeView> {
               ),
               CollapsibleList(
                 title: 'Instructions',
-                items: _recipe.instructions
+                items: model.selectedRecipe!.instructions
                         .asMap()
                         .entries
                         .map(
                           (entry) => InstructionEditor(
                             key: ValueKey(entry.key),
                             initialValue: entry.value,
-                            moveDeleteFunctions: _moveDeleteFunctions,
                             color: model.theme,
                           ),
                         )
@@ -143,7 +101,8 @@ class _EditRecipeViewState extends State<EditRecipeView> {
                         .cast<Widget>() +
                     [
                       RoundedButton(
-                        key: ValueKey(_recipe.instructions.length),
+                        key:
+                            ValueKey(model.selectedRecipe!.instructions.length),
                         text: 'Add Instruction',
                         color: model.theme,
                         onPressed: addInstruction,

@@ -32,7 +32,7 @@ class ThemeChooser extends StatelessWidget {
             ),
           ),
           SizedBox(
-            height: 320,
+            height: 240,
             child: GridView.count(
               crossAxisCount: 5,
               mainAxisSpacing: ViewConstants.smallPadding,
