@@ -8,6 +8,8 @@ class Instruction {
 
   Instruction([this.value = '']);
 
+  Instruction clone() => Instruction(value);
+
   factory Instruction.fromJson(Map<String, dynamic> json) =>
       _$InstructionFromJson(json);
 

@@ -1,15 +1,15 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:cookbook/model/meal_type.dart';
-import 'package:cookbook/constants/theme_options.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../constants/theme_options.dart';
 import 'example_recipes.dart';
+import 'meal_type.dart';
 import 'recipe.dart';
 
 List<Recipe> loadRecipesFromAppDirectory(String appDirectory) {
@@ -82,15 +82,15 @@ class AppModel extends ChangeNotifier {
 
   bool mealTypeIsSelected(MealType mealType) => filters.contains(mealType);
 
-  Future<void> addRecipe(Recipe recipe) async {
+  Future<void> saveRecipe(Recipe recipe) async {
     var index =
         recipes.indexWhere((existingRecipe) => existingRecipe.id == recipe.id);
     if (index >= 0) recipes.removeAt(index);
     recipes.add(recipe);
     final directory = (await getApplicationDocumentsDirectory()).path;
-    final file = File('$directory/coins/${recipe.id}.json');
+    final file = File('$directory/recipes/${recipe.id}.json');
     if (!file.existsSync()) {
-      file.createSync();
+      file.createSync(recursive: true);
     }
     file.writeAsStringSync(jsonEncode(recipe));
     notifyListeners();
@@ -137,11 +137,11 @@ class AppModel extends ChangeNotifier {
         for (var recipeFile in recipeFiles) {
           final recipeJson =
               jsonDecode(File(recipeFile.path).readAsStringSync());
-          await addRecipe(Recipe.fromJson(recipeJson));
+          await saveRecipe(Recipe.fromJson(recipeJson));
         }
       }
       notifyListeners();
-      return 'Successfully restored coins';
+      return 'Successfully restored recipes';
     }
     return 'Permissions error';
   }

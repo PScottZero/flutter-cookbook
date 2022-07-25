@@ -1,8 +1,8 @@
-import 'package:cookbook/components/meal_type_pill.dart';
 import 'package:flutter/material.dart';
 
 import '../constants/view_constants.dart';
 import '../model/meal_type.dart';
+import 'meal_type_pill.dart';
 
 class MealTypeFilter extends StatelessWidget {
   const MealTypeFilter({Key? key}) : super(key: key);

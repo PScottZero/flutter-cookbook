@@ -1,13 +1,14 @@
-import 'package:cookbook/views/edit_recipe_view.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../components/custom_scaffold.dart';
+import '../components/header.dart';
 import '../components/image_carousel.dart';
-import '../components/collapsible_list.dart';
 import '../components/text_pill.dart';
+import '../constants/view_constants.dart';
 import '../model/app_model.dart';
 import '../model/recipe.dart';
+import 'edit_recipe_view.dart';
 
 class RecipeView extends StatelessWidget {
   final Recipe recipe;
@@ -35,31 +36,40 @@ class RecipeView extends StatelessWidget {
               color: model.accentColor,
             ),
           ),
+          IconButton(
+            onPressed: () {},
+            icon: Icon(
+              Icons.delete,
+              color: model.accentColor,
+            ),
+          ),
         ],
         body: ListView(
           children: [
             recipe.images.isNotEmpty
                 ? ImageCarousel(images: recipe.images)
-                : Container(),
-            CollapsibleList(
-              title: 'Ingredients',
-              items: recipe.ingredients
+                : const SizedBox(height: ViewConstants.smallPadding / 2),
+            Header(
+              text: 'Ingredients',
+              color: model.theme,
+            ),
+            Column(
+              children: recipe.ingredients
                   .map(
                     (ingredients) => TextPill(text: '$ingredients'),
                   )
                   .toList(),
-              primaryColor: model.primaryColor,
-              accentColor: model.accentColor,
             ),
-            CollapsibleList(
-              title: 'Instructions',
-              items: recipe.instructions
+            Header(
+              text: 'Instructions',
+              color: model.theme,
+            ),
+            Column(
+              children: recipe.instructions
                   .map(
                     (instruction) => TextPill(text: instruction.value),
                   )
                   .toList(),
-              primaryColor: model.primaryColor,
-              accentColor: model.accentColor,
             ),
           ],
         ),

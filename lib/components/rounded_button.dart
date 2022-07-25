@@ -1,7 +1,7 @@
-import 'package:cookbook/constants/view_constants.dart';
 import 'package:flutter/material.dart';
 
 import '../constants/functions.dart';
+import '../constants/view_constants.dart';
 
 class RoundedButton extends StatelessWidget {
   final String? text;
@@ -9,8 +9,7 @@ class RoundedButton extends StatelessWidget {
   final MaterialColor color;
   final Function() onPressed;
   final int colorCode;
-  final bool isLarge;
-  final bool disabled;
+  final bool padding;
 
   const RoundedButton({
     Key? key,
@@ -19,41 +18,35 @@ class RoundedButton extends StatelessWidget {
     required this.color,
     required this.onPressed,
     this.colorCode = 300,
-    this.isLarge = true,
-    this.disabled = false,
+    this.padding = false,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    var child = Container(
-      padding: isLarge
+    return Container(
+      padding: padding
           ? const EdgeInsets.only(
               left: ViewConstants.smallPadding,
               right: ViewConstants.smallPadding,
               bottom: ViewConstants.smallPadding,
             )
-          : const EdgeInsets.only(
-              left: ViewConstants.smallPadding / 3,
-              right: ViewConstants.smallPadding / 3,
-            ),
-      constraints: isLarge
-          ? BoxConstraints(maxWidth: MediaQuery.of(context).size.width)
           : null,
+      constraints: BoxConstraints(maxWidth: MediaQuery.of(context).size.width),
       child: TextButton(
         onPressed: onPressed,
         style: ButtonStyle(
           backgroundColor: msp(color[colorCode]),
-          padding: msp(
-            EdgeInsets.all(
-              isLarge ? ViewConstants.largePadding : 2,
-            ),
-          ),
+          padding: padding
+              ? msp(
+                  const EdgeInsets.all(
+                    ViewConstants.largePadding,
+                  ),
+                )
+              : null,
           shape: msp(
             RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(
-                isLarge
-                    ? ViewConstants.largeBorderRadius
-                    : ViewConstants.smallBorderRadius,
+                ViewConstants.largeBorderRadius,
               ),
             ),
           ),
@@ -75,6 +68,5 @@ class RoundedButton extends StatelessWidget {
         ),
       ),
     );
-    return isLarge ? child : Expanded(child: child);
   }
 }

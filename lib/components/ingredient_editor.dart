@@ -2,22 +2,20 @@ import 'package:flutter/material.dart';
 
 import '../constants/view_constants.dart';
 import '../model/ingredient.dart';
-import 'move_delete.dart';
+import '../model/unit.dart';
+import 'rounded_button.dart';
 import 'rounded_container.dart';
+import 'unit_dropdown.dart';
 
 class IngredientEditor extends StatefulWidget {
   final Ingredient ingredient;
   final MaterialColor color;
-  final Function() moveUp;
-  final Function() moveDown;
   final Function() delete;
 
   const IngredientEditor({
     Key? key,
     required this.ingredient,
     required this.color,
-    required this.moveUp,
-    required this.moveDown,
     required this.delete,
   }) : super(key: key);
 
@@ -66,13 +64,37 @@ class _IngredientEditorState extends State<IngredientEditor> {
               hintText: 'Enter an amount',
             ),
           ),
-          const SizedBox(height: ViewConstants.smallPadding / 2),
-          MoveDelete(
-            isIngredient: true,
+          const SizedBox(height: ViewConstants.smallPadding),
+          UnitDropdown(
+            unit: widget.ingredient.unit,
+            onChanged: (unit) => setState(
+              () => widget.ingredient.unit = unit ?? Unit.none,
+            ),
+          ),
+          const SizedBox(height: ViewConstants.smallPadding),
+          widget.ingredient.unit == Unit.custom
+              ? Column(
+                  children: [
+                    TextField(
+                      controller: _customUnitEditingController,
+                      onChanged: (customUnit) => setState(
+                        () => widget.ingredient.customUnit = customUnit,
+                      ),
+                      style: const TextStyle(fontSize: ViewConstants.smallFont),
+                      textCapitalization: TextCapitalization.sentences,
+                      decoration: const InputDecoration(
+                        labelText: 'Custom Unit',
+                        hintText: 'Enter a custom unit',
+                      ),
+                    ),
+                    const SizedBox(height: ViewConstants.smallPadding),
+                  ],
+                )
+              : Container(),
+          RoundedButton(
+            icon: Icons.delete,
             color: widget.color,
-            moveUp: widget.moveUp,
-            moveDown: widget.moveDown,
-            delete: widget.delete,
+            onPressed: widget.delete,
           ),
         ],
       ),

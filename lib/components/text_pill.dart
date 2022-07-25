@@ -1,7 +1,7 @@
-import 'package:cookbook/components/rounded_container.dart';
 import 'package:flutter/material.dart';
 
 import '../constants/view_constants.dart';
+import 'rounded_container.dart';
 
 class TextPill extends StatelessWidget {
   final String text;

@@ -9,13 +9,13 @@ part 'recipe.g.dart';
 
 @JsonSerializable()
 class Recipe {
+  String id = const Uuid().v1();
+
   String name;
   List<MealType> mealTypes;
   List<Ingredient> ingredients;
   List<Instruction> instructions;
   List<String> images;
-
-  String id = const Uuid().v1();
 
   Recipe({
     required this.name,
@@ -35,13 +35,17 @@ class Recipe {
   Recipe clone() {
     var clonedIngredients =
         ingredients.map((ingredient) => ingredient.clone()).toList();
-    return Recipe(
+    var clonedInstructions =
+        instructions.map((instruction) => instruction.clone()).toList();
+    var clonedRecipe = Recipe(
       name: name,
       mealTypes: mealTypes,
       ingredients: clonedIngredients,
-      instructions: instructions,
+      instructions: clonedInstructions,
       images: images,
     );
+    clonedRecipe.id = id;
+    return clonedRecipe;
   }
 
   void addIngredient() => ingredients.add(Ingredient.empty());
@@ -53,26 +57,6 @@ class Recipe {
 
   void deleteInstruction(Instruction instruction) =>
       instructions.remove(instruction);
-
-  void moveIngredientUp(Ingredient ingredient) {
-    var index = ingredients.indexOf(ingredient);
-    ingredients.insert(index - 1, ingredients.removeAt(index));
-  }
-
-  void moveIngredientDown(Ingredient ingredient) {
-    var index = ingredients.indexOf(ingredient);
-    ingredients.insert(index + 1, ingredients.removeAt(index));
-  }
-
-  void moveInstructionUp(Instruction instruction) {
-    var index = instructions.indexOf(instruction);
-    instructions.insert(index - 1, instructions.removeAt(index));
-  }
-
-  void moveInstructionDown(Instruction instruction) {
-    var index = instructions.indexOf(instruction);
-    instructions.insert(index + 1, instructions.removeAt(index));
-  }
 
   factory Recipe.fromJson(Map<String, dynamic> json) => _$RecipeFromJson(json);
 

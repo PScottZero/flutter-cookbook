@@ -36,7 +36,7 @@ class Ingredient {
           unit != Unit.ml &&
           unit != Unit.g &&
           unit != Unit.custom;
-      var unitStr = capitalize(unit == Unit.custom ? customUnit : unit.name);
+      var unitStr = unit == Unit.custom ? customUnit : unit.name;
       return plural
           ? '$amount ${unitStr}s of ${capitalizeAllWords(name)}'
           : '$amount $unitStr of ${capitalizeAllWords(name)}';

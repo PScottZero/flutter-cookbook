@@ -1,13 +1,13 @@
-import 'package:cookbook/components/meal_type_filter.dart';
-import 'package:cookbook/views/settings_view.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../components/add_recipe_button.dart';
 import '../components/custom_scaffold.dart';
+import '../components/meal_type_filter.dart';
 import '../components/recipe_tile.dart';
 import '../constants/view_constants.dart';
 import '../model/app_model.dart';
+import 'settings_view.dart';
 
 class AllRecipesView extends StatelessWidget {
   const AllRecipesView({Key? key}) : super(key: key);

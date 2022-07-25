@@ -1,8 +1,8 @@
-import 'package:cookbook/constants/view_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../constants/functions.dart';
+import '../constants/view_constants.dart';
 import '../model/app_model.dart';
 import '../model/meal_type.dart';
 
