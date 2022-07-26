@@ -54,8 +54,8 @@ class AppModel extends ChangeNotifier {
   Color get accentColor => theme[50]!;
 
   AppModel() {
-    // loadTestRecipes();
-    loadRecipes();
+    loadTestRecipes();
+    // loadRecipes();
     loadTheme();
   }
 
@@ -79,14 +79,14 @@ class AppModel extends ChangeNotifier {
   List<Recipe> recipesByMealType(MealType mealType) =>
       recipes.where((recipe) => recipe.mealTypes.contains(mealType)).toList();
 
+  bool mealTypeIsSelected(MealType mealType) => filters.contains(mealType);
+
   void toggleMealTypeFilter(MealType mealType) {
     mealTypeIsSelected(mealType)
         ? filters.remove(mealType)
         : filters.add(mealType);
     notifyListeners();
   }
-
-  bool mealTypeIsSelected(MealType mealType) => filters.contains(mealType);
 
   Future<void> saveRecipe(Recipe recipe) async {
     var index =

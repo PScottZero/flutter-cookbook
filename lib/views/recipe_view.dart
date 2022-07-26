@@ -1,4 +1,5 @@
 import 'package:cookbook/components/confirm_cancel_dialog.dart';
+import 'package:cookbook/components/linked_recipe.dart';
 import 'package:cookbook/components/meal_types.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -83,7 +84,12 @@ class RecipeView extends StatelessWidget {
             Column(
               children: recipe.ingredients
                   .map(
-                    (ingredients) => TextPill(text: '$ingredients'),
+                    (ingredient) => ingredient.recipeId != null
+                        ? LinkedRecipe(
+                            recipeId: ingredient.recipeId!,
+                            model: model,
+                          )
+                        : TextPill(text: '$ingredient'),
                   )
                   .toList(),
             ),

@@ -1,4 +1,5 @@
 import 'package:cookbook/components/custom_text_field.dart';
+import 'package:cookbook/components/edit_linked_recipe.dart';
 import 'package:cookbook/components/meal_types.dart';
 import 'package:cookbook/components/rounded_container.dart';
 import 'package:cookbook/constants/view_constants.dart';
@@ -9,8 +10,8 @@ import 'package:reorderables/reorderables.dart';
 import '../components/custom_scaffold.dart';
 import '../components/header.dart';
 import '../components/image_picker.dart';
-import '../components/ingredient_editor.dart';
-import '../components/instruction_editor.dart';
+import '../components/edit_ingredient.dart';
+import '../components/edit_instruction.dart';
 import '../components/rounded_button.dart';
 import '../model/app_model.dart';
 import '../model/recipe.dart';
@@ -74,7 +75,6 @@ class _EditRecipeViewState extends State<EditRecipeView> {
               margin: true,
               child: CustomTextField(
                 text: _recipe.name,
-                capitalization: TextCapitalization.words,
                 onChanged: (name) => _recipe.name = name,
               ),
             ),
@@ -125,16 +125,21 @@ class _EditRecipeViewState extends State<EditRecipeView> {
               ),
               children: <Widget>[
                 for (int index = 0; index < _recipe.ingredients.length; index++)
-                  IngredientEditor(
-                    key: ValueKey(index),
-                    ingredient: _recipe.ingredients[index],
-                    color: model.theme,
-                    delete: () => setState(
-                      () => _recipe.deleteIngredient(
-                        _recipe.ingredients[index],
-                      ),
-                    ),
-                  ),
+                  _recipe.ingredients[index].recipeId != null
+                      ? EditLinkedRecipe(
+                          key: ValueKey(index),
+                          ingredient: _recipe.ingredients[index],
+                        )
+                      : EditIngredient(
+                          key: ValueKey(index),
+                          ingredient: _recipe.ingredients[index],
+                          color: model.theme,
+                          delete: () => setState(
+                            () => _recipe.deleteIngredient(
+                              _recipe.ingredients[index],
+                            ),
+                          ),
+                        ),
               ],
             ),
             RoundedButton(
@@ -142,6 +147,12 @@ class _EditRecipeViewState extends State<EditRecipeView> {
               color: model.theme,
               padding: true,
               onPressed: () => setState(() => _recipe.addIngredient()),
+            ),
+            RoundedButton(
+              text: 'Add Linked Recipe',
+              color: model.theme,
+              padding: true,
+              onPressed: () => setState(() => _recipe.addLinkedRecipe()),
             ),
             ReorderableColumn(
               header: Header(
@@ -158,7 +169,7 @@ class _EditRecipeViewState extends State<EditRecipeView> {
                 for (int index = 0;
                     index < _recipe.instructions.length;
                     index++)
-                  InstructionEditor(
+                  EditInstruction(
                     key: ValueKey(index),
                     instruction: _recipe.instructions[index],
                     color: model.theme,

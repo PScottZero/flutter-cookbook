@@ -11,15 +11,24 @@ class Ingredient {
   String amount;
   Unit unit;
   String customUnit;
+  String? recipeId;
 
   Ingredient({
     required this.name,
     required this.amount,
     this.unit = Unit.none,
     this.customUnit = '',
+    this.recipeId,
   });
 
   Ingredient.empty() : this(name: '', amount: '');
+
+  Ingredient.linkedRecipe()
+      : this(
+          name: '',
+          amount: '',
+          recipeId: '',
+        );
 
   Ingredient clone() => Ingredient(
         name: name,

@@ -8,12 +8,12 @@ import 'rounded_button.dart';
 import 'rounded_container.dart';
 import 'unit_dropdown.dart';
 
-class IngredientEditor extends StatefulWidget {
+class EditIngredient extends StatefulWidget {
   final Ingredient ingredient;
   final MaterialColor color;
   final Function() delete;
 
-  const IngredientEditor({
+  const EditIngredient({
     Key? key,
     required this.ingredient,
     required this.color,
@@ -21,10 +21,10 @@ class IngredientEditor extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  State<IngredientEditor> createState() => _IngredientEditorState();
+  State<EditIngredient> createState() => _EditIngredientState();
 }
 
-class _IngredientEditorState extends State<IngredientEditor> {
+class _EditIngredientState extends State<EditIngredient> {
   final TextEditingController _nameEditingController = TextEditingController();
   final TextEditingController _amountEditingController =
       TextEditingController();

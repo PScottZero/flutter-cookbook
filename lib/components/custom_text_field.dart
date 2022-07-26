@@ -15,7 +15,7 @@ class CustomTextField extends StatefulWidget {
     required this.onChanged,
     this.label,
     this.maxLines = 1,
-    this.capitalization = TextCapitalization.sentences,
+    this.capitalization = TextCapitalization.words,
   }) : super(key: key);
 
   @override

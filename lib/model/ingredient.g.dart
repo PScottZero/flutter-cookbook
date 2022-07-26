@@ -11,6 +11,7 @@ Ingredient _$IngredientFromJson(Map<String, dynamic> json) => Ingredient(
       amount: json['amount'] as String,
       unit: $enumDecodeNullable(_$UnitEnumMap, json['unit']) ?? Unit.none,
       customUnit: json['customUnit'] as String? ?? '',
+      recipeId: json['recipeId'] as String?,
     );
 
 Map<String, dynamic> _$IngredientToJson(Ingredient instance) =>
@@ -19,6 +20,7 @@ Map<String, dynamic> _$IngredientToJson(Ingredient instance) =>
       'amount': instance.amount,
       'unit': _$UnitEnumMap[instance.unit]!,
       'customUnit': instance.customUnit,
+      'recipeId': instance.recipeId,
     };
 
 const _$UnitEnumMap = {

@@ -6,12 +6,12 @@ import '../model/instruction.dart';
 import 'rounded_button.dart';
 import 'rounded_container.dart';
 
-class InstructionEditor extends StatefulWidget {
+class EditInstruction extends StatefulWidget {
   final Instruction instruction;
   final MaterialColor color;
   final Function() delete;
 
-  const InstructionEditor({
+  const EditInstruction({
     Key? key,
     required this.instruction,
     required this.color,
@@ -19,10 +19,10 @@ class InstructionEditor extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  State<InstructionEditor> createState() => _InstructionEditorState();
+  State<EditInstruction> createState() => _EditInstructionState();
 }
 
-class _InstructionEditorState extends State<InstructionEditor> {
+class _EditInstructionState extends State<EditInstruction> {
   final TextEditingController _textEditingController = TextEditingController();
 
   @override
@@ -39,6 +39,7 @@ class _InstructionEditorState extends State<InstructionEditor> {
           CustomTextField(
             text: widget.instruction.value,
             onChanged: (value) => widget.instruction.value = value,
+            capitalization: TextCapitalization.sentences,
             maxLines: 5,
           ),
           const SizedBox(height: ViewConstants.smallPadding),

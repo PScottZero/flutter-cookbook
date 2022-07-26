@@ -28,6 +28,7 @@ class ImageCarousel extends StatelessWidget {
                   image: DecorationImage(
                     image: Image.memory(base64Decode(images[index])).image,
                     fit: BoxFit.cover,
+                    filterQuality: FilterQuality.medium,
                   ),
                 ),
               ),

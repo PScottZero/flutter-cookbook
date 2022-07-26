@@ -52,6 +52,8 @@ class Recipe {
 
   void addInstruction() => instructions.add(Instruction());
 
+  void addLinkedRecipe() => ingredients.add(Ingredient.linkedRecipe());
+
   void deleteIngredient(Ingredient ingredient) =>
       ingredients.remove(ingredient);
 
