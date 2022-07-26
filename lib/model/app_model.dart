@@ -54,8 +54,8 @@ class AppModel extends ChangeNotifier {
   Color get accentColor => theme[50]!;
 
   AppModel() {
-    loadTestRecipes();
-    // loadRecipes();
+    // loadTestRecipes();
+    loadRecipes();
     loadTheme();
   }
 
