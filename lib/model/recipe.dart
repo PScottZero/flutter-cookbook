@@ -39,10 +39,10 @@ class Recipe {
         instructions.map((instruction) => instruction.clone()).toList();
     var clonedRecipe = Recipe(
       name: name,
-      mealTypes: mealTypes,
-      ingredients: clonedIngredients,
-      instructions: clonedInstructions,
-      images: images,
+      mealTypes: List.from(mealTypes),
+      ingredients: List.from(clonedIngredients),
+      instructions: List.from(clonedInstructions),
+      images: List.from(images),
     );
     clonedRecipe.id = id;
     return clonedRecipe;

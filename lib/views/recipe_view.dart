@@ -1,3 +1,4 @@
+import 'package:cookbook/components/confirm_cancel_dialog.dart';
 import 'package:cookbook/components/meal_types.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -15,6 +16,21 @@ class RecipeView extends StatelessWidget {
   final Recipe recipe;
 
   const RecipeView({Key? key, required this.recipe}) : super(key: key);
+
+  void _showDeleteDialog(AppModel model, BuildContext context) => showDialog(
+        context: context,
+        builder: (context) => ConfirmCancelDialog(
+          title: 'Delete Recipe',
+          message: 'Are you sure you want to delete this recipe?',
+          confirmAction: 'Delete',
+          onConfirmed: () {
+            model.deleteRecipe(recipe);
+            Navigator.pop(context);
+            Navigator.pop(context);
+          },
+          color: model.theme,
+        ),
+      );
 
   @override
   Widget build(BuildContext context) {
@@ -38,10 +54,7 @@ class RecipeView extends StatelessWidget {
             ),
           ),
           IconButton(
-            onPressed: () {
-              model.deleteRecipe(recipe);
-              Navigator.pop(context);
-            },
+            onPressed: () => _showDeleteDialog(model, context),
             icon: Icon(
               Icons.delete,
               color: model.accentColor,

@@ -12,9 +12,12 @@ import 'example_recipes.dart';
 import 'meal_type.dart';
 import 'recipe.dart';
 
+const backupDir = '/storage/emulated/0/Documents/CookbookBU';
+const storageDir = 'recipes';
+
 List<Recipe> loadRecipesFromAppDirectory(String appDirectory) {
   List<Recipe> recipes = [];
-  var recipesDirectory = Directory('$appDirectory/recipes/');
+  var recipesDirectory = Directory('$appDirectory/$storageDir/');
   if (recipesDirectory.existsSync()) {
     var recipeFiles = recipesDirectory.listSync();
     if (recipeFiles.isNotEmpty) {
@@ -32,12 +35,13 @@ class AppModel extends ChangeNotifier {
   List<Recipe> get filteredRecipes {
     var filtered = recipes.where(
       (recipe) {
+        var hasMealType = false;
         for (var mealType in filters) {
-          if (!recipe.mealTypes.contains(mealType)) {
-            return false;
+          if (recipe.mealTypes.contains(mealType)) {
+            hasMealType = true;
           }
         }
-        return true;
+        return hasMealType || filters.isEmpty;
       },
     ).toList();
     filtered.sort((a, b) => a.name.compareTo(b.name));
@@ -90,7 +94,7 @@ class AppModel extends ChangeNotifier {
     if (index >= 0) recipes.removeAt(index);
     recipes.add(recipe);
     final directory = (await getApplicationDocumentsDirectory()).path;
-    final file = File('$directory/recipes/${recipe.id}.json');
+    final file = File('$directory/$storageDir/${recipe.id}.json');
     if (!file.existsSync()) {
       file.createSync(recursive: true);
     }
@@ -101,22 +105,21 @@ class AppModel extends ChangeNotifier {
   Future<void> deleteRecipe(Recipe recipe) async {
     recipes.remove(recipe);
     final directory = (await getApplicationDocumentsDirectory()).path;
-    final file = File('$directory/recipes/${recipe.id}.json');
+    final file = File('$directory/$storageDir/${recipe.id}.json');
     file.deleteSync();
     notifyListeners();
   }
 
   Future<String> backupRecipes() async {
     if (await Permission.manageExternalStorage.request().isGranted) {
-      final directory = Directory('/storage/emulated/0/Documents/CookbookBU/');
+      final directory = Directory(backupDir);
       if (directory.existsSync()) {
         directory.deleteSync(recursive: true);
       }
       directory.createSync();
       for (var recipe in recipes) {
-        final file = File(
-            '/storage/emulated/0/Documents/NumismaticBU/${recipe.id}.json');
-        file.createSync();
+        final file = File('$backupDir/${recipe.id}.json');
+        file.createSync(recursive: true);
         file.writeAsStringSync(jsonEncode(recipe));
       }
       return 'Successfully backed up recipes';
@@ -126,11 +129,8 @@ class AppModel extends ChangeNotifier {
 
   Future<String> restoreRecipes() async {
     if (await Permission.manageExternalStorage.request().isGranted) {
-      final backupDirectory =
-          Directory('/storage/emulated/0/Documents/NumismaticBU/');
-      if (!backupDirectory.existsSync()) {
-        return 'No backup found';
-      }
+      final backupDirectory = Directory(backupDir);
+      if (!backupDirectory.existsSync()) return 'No backup found';
       while (recipes.isNotEmpty) {
         await deleteRecipe(recipes[0]);
       }

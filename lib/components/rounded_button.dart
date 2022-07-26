@@ -8,7 +8,6 @@ class RoundedButton extends StatelessWidget {
   final IconData? icon;
   final MaterialColor color;
   final Function() onPressed;
-  final int colorCode;
   final bool padding;
 
   const RoundedButton({
@@ -17,7 +16,6 @@ class RoundedButton extends StatelessWidget {
     this.icon,
     required this.color,
     required this.onPressed,
-    this.colorCode = 300,
     this.padding = false,
   }) : super(key: key);
 
@@ -35,7 +33,7 @@ class RoundedButton extends StatelessWidget {
       child: TextButton(
         onPressed: onPressed,
         style: ButtonStyle(
-          backgroundColor: msp(color[colorCode]),
+          backgroundColor: msp(color[300]),
           padding: padding
               ? msp(
                   const EdgeInsets.all(
