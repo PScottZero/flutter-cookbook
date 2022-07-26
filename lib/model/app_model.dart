@@ -50,7 +50,8 @@ class AppModel extends ChangeNotifier {
   Color get accentColor => theme[50]!;
 
   AppModel() {
-    loadTestRecipes();
+    // loadTestRecipes();
+    loadRecipes();
     loadTheme();
   }
 
@@ -63,6 +64,7 @@ class AppModel extends ChangeNotifier {
   void loadTheme() async {
     final preferences = await SharedPreferences.getInstance();
     theme = themeOptions[preferences.getInt('themeIndex') ?? 6];
+    notifyListeners();
   }
 
   void loadTestRecipes() async {

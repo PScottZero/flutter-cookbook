@@ -15,7 +15,7 @@ class TextPill extends StatelessWidget {
         text,
         textAlign: TextAlign.center,
         style: const TextStyle(
-          fontSize: ViewConstants.smallFont,
+          fontSize: ViewConstants.fontSize,
         ),
       ),
     );

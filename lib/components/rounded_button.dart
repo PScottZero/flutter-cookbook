@@ -57,7 +57,7 @@ class RoundedButton extends StatelessWidget {
                   text!,
                   style: TextStyle(
                     color: color[50],
-                    fontSize: ViewConstants.smallFont,
+                    fontSize: ViewConstants.fontSize,
                   ),
                 )
               : Icon(

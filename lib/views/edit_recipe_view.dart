@@ -1,3 +1,7 @@
+import 'package:cookbook/components/custom_text_field.dart';
+import 'package:cookbook/components/meal_types.dart';
+import 'package:cookbook/components/rounded_container.dart';
+import 'package:cookbook/constants/view_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:reorderables/reorderables.dart';
@@ -8,7 +12,6 @@ import '../components/image_picker.dart';
 import '../components/ingredient_editor.dart';
 import '../components/instruction_editor.dart';
 import '../components/rounded_button.dart';
-import '../constants/view_constants.dart';
 import '../model/app_model.dart';
 import '../model/recipe.dart';
 
@@ -27,7 +30,6 @@ class EditRecipeView extends StatefulWidget {
 class _EditRecipeViewState extends State<EditRecipeView> {
   late Recipe _recipe;
   late bool _editMode;
-  late TextEditingController _recipeNameTextController;
 
   String get title {
     var recipeName = _recipe.name == '' ? 'Recipe' : _recipe.name;
@@ -39,7 +41,6 @@ class _EditRecipeViewState extends State<EditRecipeView> {
     super.initState();
     _editMode = widget.recipe != null;
     _recipe = _editMode ? widget.recipe!.clone() : Recipe.empty();
-    _recipeNameTextController = TextEditingController(text: _recipe.name);
   }
 
   @override
@@ -64,38 +65,51 @@ class _EditRecipeViewState extends State<EditRecipeView> {
         ],
         body: ListView(
           children: [
-            Container(
-              color: model.primaryColor,
-              padding: const EdgeInsets.fromLTRB(
-                ViewConstants.smallPadding,
-                ViewConstants.smallPadding,
-                ViewConstants.smallPadding,
-                ViewConstants.largePadding,
+            Header(
+              text: 'Recipe Name',
+              color: model.theme,
+              bottomPadding: false,
+            ),
+            RoundedContainer(
+              margin: true,
+              child: CustomTextField(
+                text: _recipe.name,
+                capitalization: TextCapitalization.words,
+                onChanged: (name) => _recipe.name = name,
               ),
-              child: TextField(
-                controller: _recipeNameTextController,
-                style: TextStyle(
-                  fontSize: ViewConstants.smallFont,
-                  color: model.accentColor,
-                ),
-                textCapitalization: TextCapitalization.sentences,
-                decoration: InputDecoration(
-                  labelText: 'Recipe Name',
-                  hintText: 'Enter recipe name',
-                  labelStyle: TextStyle(color: model.accentColor),
-                  hintStyle: TextStyle(color: model.accentColor),
-                  enabledBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(
-                      color: model.accentColor,
-                    ),
-                  ),
-                ),
-                onChanged: (value) => setState(() => _recipe.name = value),
+            ),
+            Header(
+              text: 'Meal Types',
+              color: model.theme,
+              bottomPadding: false,
+            ),
+            Padding(
+              padding: const EdgeInsets.only(
+                top: ViewConstants.smallPadding,
+                bottom: ViewConstants.smallPadding,
               ),
+              child: MealTypes(
+                selectedMealTypes: _recipe.mealTypes,
+                toggleMealType: (mealType) => setState(
+                  () => _recipe.mealTypes.contains(mealType)
+                      ? _recipe.mealTypes.remove(mealType)
+                      : _recipe.mealTypes.add(mealType),
+                ),
+              ),
+            ),
+            Header(
+              text: 'Images',
+              color: model.theme,
+              bottomPadding: false,
             ),
             ImagePicker(
               images: _recipe.images,
-              addImage: (image) => setState(() => _recipe.images.add(image)),
+              addImage: (image) => setState(
+                () => _recipe.images.add(image),
+              ),
+              deleteImage: (index) => setState(
+                () => _recipe.images.removeAt(index),
+              ),
               color: model.theme,
             ),
             ReorderableColumn(

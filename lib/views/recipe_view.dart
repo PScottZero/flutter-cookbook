@@ -1,3 +1,4 @@
+import 'package:cookbook/components/meal_types.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -37,7 +38,10 @@ class RecipeView extends StatelessWidget {
             ),
           ),
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              model.deleteRecipe(recipe);
+              Navigator.pop(context);
+            },
             icon: Icon(
               Icons.delete,
               color: model.accentColor,
@@ -49,6 +53,16 @@ class RecipeView extends StatelessWidget {
             recipe.images.isNotEmpty
                 ? ImageCarousel(images: recipe.images)
                 : const SizedBox(height: ViewConstants.smallPadding / 2),
+            Padding(
+              padding: const EdgeInsets.only(
+                top: ViewConstants.smallPadding,
+                bottom: ViewConstants.smallPadding,
+              ),
+              child: MealTypes(
+                selectedMealTypes: recipe.mealTypes,
+                editable: false,
+              ),
+            ),
             Header(
               text: 'Ingredients',
               color: model.theme,

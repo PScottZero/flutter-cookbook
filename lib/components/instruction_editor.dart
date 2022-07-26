@@ -1,3 +1,4 @@
+import 'package:cookbook/components/custom_text_field.dart';
 import 'package:flutter/material.dart';
 
 import '../constants/view_constants.dart';
@@ -35,16 +36,10 @@ class _InstructionEditorState extends State<InstructionEditor> {
     return RoundedContainer(
       child: Column(
         children: [
-          TextField(
-            controller: _textEditingController,
-            style: const TextStyle(fontSize: ViewConstants.smallFont),
-            minLines: 1,
-            maxLines: 5,
-            textCapitalization: TextCapitalization.sentences,
-            decoration: const InputDecoration(
-              hintText: 'Enter an instruction',
-            ),
+          CustomTextField(
+            text: widget.instruction.value,
             onChanged: (value) => widget.instruction.value = value,
+            maxLines: 5,
           ),
           const SizedBox(height: ViewConstants.smallPadding),
           RoundedButton(

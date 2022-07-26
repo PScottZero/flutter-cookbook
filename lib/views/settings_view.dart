@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../components/custom_scaffold.dart';
+import '../components/header.dart';
 import '../components/rounded_button.dart';
 import '../components/theme_chooser.dart';
-import '../constants/view_constants.dart';
 import '../model/app_model.dart';
 
 class SettingsView extends StatelessWidget {
@@ -21,15 +21,9 @@ class SettingsView extends StatelessWidget {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Container(
-                  padding: const EdgeInsets.all(ViewConstants.smallPadding),
-                  child: Text(
-                    'Backup/Restore',
-                    style: TextStyle(
-                      fontSize: ViewConstants.smallFont,
-                      color: model.primaryColor,
-                    ),
-                  ),
+                Header(
+                  text: 'Backup/Restore',
+                  color: model.theme,
                 ),
                 RoundedButton(
                   text: 'Backup Recipes',

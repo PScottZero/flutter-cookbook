@@ -1,21 +1,23 @@
 import 'dart:convert';
 
-import 'package:carousel_slider/carousel_slider.dart';
+import 'package:cookbook/components/deletable_image.dart';
+import 'package:cookbook/components/rounded_button.dart';
+import 'package:cookbook/constants/view_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart' as picker;
-
-import '../constants/view_constants.dart';
-import 'rounded_button.dart';
+import 'package:reorderables/reorderables.dart';
 
 class ImagePicker extends StatefulWidget {
   final List<String> images;
   final Function(String) addImage;
+  final Function(int) deleteImage;
   final MaterialColor color;
 
   const ImagePicker({
     Key? key,
     required this.images,
     required this.addImage,
+    required this.deleteImage,
     required this.color,
   }) : super(key: key);
 
@@ -37,32 +39,49 @@ class _ImagePickerState extends State<ImagePicker> {
 
   @override
   Widget build(BuildContext context) {
-    return CarouselSlider(
-      options: CarouselOptions(
-        height: 400,
-        viewportFraction: 1.0,
-        aspectRatio: 1,
-      ),
-      items: widget.images
-              .map(
-                (image) => Image.memory(
-                  base64Decode(image),
-                  fit: BoxFit.cover,
+    return SizedBox(
+      height: 200,
+      child: ListView(
+        scrollDirection: Axis.horizontal,
+        padding: const EdgeInsets.only(
+          left: ViewConstants.smallPadding / 2,
+          top: ViewConstants.smallPadding,
+          right: ViewConstants.smallPadding / 2,
+          bottom: ViewConstants.smallPadding,
+        ),
+        children: [
+          ReorderableRow(
+            children: <Widget>[
+              for (int index = 0; index < widget.images.length; index++)
+                DeletableImage(
+                  key: ValueKey(index),
+                  image: widget.images[index],
+                  delete: widget.deleteImage,
                 ),
-              )
-              .toList()
-              .cast<Widget>() +
-          [
-            Padding(
-              padding: const EdgeInsets.only(top: ViewConstants.smallPadding),
+            ],
+            onReorder: (oldIndex, newIndex) => setState(
+              () => widget.images.insert(
+                newIndex,
+                widget.images.removeAt(oldIndex),
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(
+              left: ViewConstants.smallPadding / 2,
+              right: ViewConstants.smallPadding / 2,
+            ),
+            child: AspectRatio(
+              aspectRatio: 1,
               child: RoundedButton(
                 text: 'Add Image',
                 color: widget.color,
                 onPressed: _addImage,
-                padding: true,
               ),
             ),
-          ],
+          ),
+        ],
+      ),
     );
   }
 }

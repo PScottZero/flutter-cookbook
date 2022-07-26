@@ -21,7 +21,7 @@ class UnitDropdown extends StatelessWidget {
       isExpanded: true,
       onChanged: onChanged,
       style: GoogleFonts.comfortaa(
-        fontSize: ViewConstants.smallFont,
+        fontSize: ViewConstants.fontSize,
         color: Colors.black,
       ),
       decoration: const InputDecoration(

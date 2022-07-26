@@ -20,10 +20,11 @@ class AddRecipeButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return FloatingActionButton.extended(
       backgroundColor: backgroundColor,
+      elevation: 0,
       label: Text(
         'Add Recipe',
         style: TextStyle(
-          fontSize: ViewConstants.smallFont,
+          fontSize: ViewConstants.fontSize,
           color: textColor,
         ),
       ),

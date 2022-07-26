@@ -1,3 +1,4 @@
+import 'package:cookbook/components/header.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -19,20 +20,12 @@ class ThemeChooser extends StatelessWidget {
       builder: (context, model, child) => Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
-            padding: const EdgeInsets.all(
-              ViewConstants.smallPadding,
-            ),
-            child: Text(
-              'Themes',
-              style: TextStyle(
-                fontSize: ViewConstants.smallFont,
-                color: model.primaryColor,
-              ),
-            ),
+          Header(
+            text: 'Themes',
+            color: selectedTheme,
           ),
           SizedBox(
-            height: 240,
+            height: 230,
             child: GridView.count(
               crossAxisCount: 5,
               mainAxisSpacing: ViewConstants.smallPadding,

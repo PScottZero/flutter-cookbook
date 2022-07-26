@@ -32,7 +32,7 @@ class CustomScaffold extends StatelessWidget {
           style: TextStyle(color: appBarTextColor),
         ),
         centerTitle: true,
-        // elevation: 0,
+        elevation: 0,
         backgroundColor: appBarColor,
         systemOverlayStyle: SystemUiOverlayStyle(
           statusBarColor: appBarColor,

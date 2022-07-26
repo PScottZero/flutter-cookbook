@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 
 import '../components/add_recipe_button.dart';
 import '../components/custom_scaffold.dart';
-import '../components/meal_type_filter.dart';
+import '../components/meal_types.dart';
 import '../components/recipe_tile.dart';
 import '../constants/view_constants.dart';
 import '../model/app_model.dart';
@@ -39,7 +39,11 @@ class AllRecipesView extends StatelessWidget {
             builder: (context, model, child) => Column(
               children: [
                 const SizedBox(height: ViewConstants.smallPadding),
-                const MealTypeFilter(),
+                MealTypes(
+                  selectedMealTypes: model.filters,
+                  toggleMealType: (mealType) =>
+                      model.toggleMealTypeFilter(mealType),
+                ),
                 Expanded(
                   child: GridView.count(
                     crossAxisCount: 2,

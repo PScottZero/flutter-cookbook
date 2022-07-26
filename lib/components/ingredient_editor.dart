@@ -1,3 +1,4 @@
+import 'package:cookbook/components/custom_text_field.dart';
 import 'package:flutter/material.dart';
 
 import '../constants/view_constants.dart';
@@ -43,26 +44,16 @@ class _IngredientEditorState extends State<IngredientEditor> {
     return RoundedContainer(
       child: Column(
         children: [
-          TextField(
-            controller: _nameEditingController,
+          CustomTextField(
+            text: widget.ingredient.name,
+            label: 'Ingredient',
             onChanged: (name) => widget.ingredient.name = name,
-            style: const TextStyle(fontSize: ViewConstants.smallFont),
-            textCapitalization: TextCapitalization.sentences,
-            decoration: const InputDecoration(
-              labelText: 'Ingredient',
-              hintText: 'Enter an ingredient',
-            ),
           ),
           const SizedBox(height: ViewConstants.smallPadding / 2),
-          TextField(
-            controller: _amountEditingController,
+          CustomTextField(
+            text: widget.ingredient.amount,
+            label: 'Amount',
             onChanged: (amount) => widget.ingredient.amount = amount,
-            style: const TextStyle(fontSize: ViewConstants.smallFont),
-            textCapitalization: TextCapitalization.sentences,
-            decoration: const InputDecoration(
-              labelText: 'Amount',
-              hintText: 'Enter an amount',
-            ),
           ),
           const SizedBox(height: ViewConstants.smallPadding),
           UnitDropdown(
@@ -75,17 +66,11 @@ class _IngredientEditorState extends State<IngredientEditor> {
           widget.ingredient.unit == Unit.custom
               ? Column(
                   children: [
-                    TextField(
-                      controller: _customUnitEditingController,
-                      onChanged: (customUnit) => setState(
-                        () => widget.ingredient.customUnit = customUnit,
-                      ),
-                      style: const TextStyle(fontSize: ViewConstants.smallFont),
-                      textCapitalization: TextCapitalization.sentences,
-                      decoration: const InputDecoration(
-                        labelText: 'Custom Unit',
-                        hintText: 'Enter a custom unit',
-                      ),
+                    CustomTextField(
+                      text: widget.ingredient.customUnit,
+                      label: 'Custom Unit',
+                      onChanged: (customUnit) =>
+                          widget.ingredient.customUnit = customUnit,
                     ),
                     const SizedBox(height: ViewConstants.smallPadding),
                   ],
