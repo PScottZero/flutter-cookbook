@@ -1,5 +1,5 @@
 import 'package:cookbook/components/custom_text_field.dart';
-import 'package:cookbook/components/edit_linked_recipe.dart';
+import 'package:cookbook/components/edit_sub_recipe.dart';
 import 'package:cookbook/components/meal_types.dart';
 import 'package:cookbook/components/rounded_container.dart';
 import 'package:cookbook/constants/view_constants.dart';
@@ -37,6 +37,12 @@ class _EditRecipeViewState extends State<EditRecipeView> {
     return _editMode ? 'Edit $recipeName' : 'New Recipe';
   }
 
+  void _deleteIngredient(int index) => setState(
+        () => _recipe.deleteIngredient(
+          _recipe.ingredients[index],
+        ),
+      );
+
   @override
   void initState() {
     super.initState();
@@ -56,7 +62,7 @@ class _EditRecipeViewState extends State<EditRecipeView> {
           IconButton(
             onPressed: () {
               model.saveRecipe(_recipe);
-              Navigator.pop(context);
+              Navigator.pop(context, _recipe);
             },
             icon: Icon(
               Icons.save,
@@ -126,19 +132,17 @@ class _EditRecipeViewState extends State<EditRecipeView> {
               children: <Widget>[
                 for (int index = 0; index < _recipe.ingredients.length; index++)
                   _recipe.ingredients[index].recipeId != null
-                      ? EditLinkedRecipe(
+                      ? EditSubRecipe(
                           key: ValueKey(index),
                           ingredient: _recipe.ingredients[index],
+                          color: model.theme,
+                          delete: () => _deleteIngredient(index),
                         )
                       : EditIngredient(
                           key: ValueKey(index),
                           ingredient: _recipe.ingredients[index],
                           color: model.theme,
-                          delete: () => setState(
-                            () => _recipe.deleteIngredient(
-                              _recipe.ingredients[index],
-                            ),
-                          ),
+                          delete: () => _deleteIngredient(index),
                         ),
               ],
             ),
@@ -149,10 +153,10 @@ class _EditRecipeViewState extends State<EditRecipeView> {
               onPressed: () => setState(() => _recipe.addIngredient()),
             ),
             RoundedButton(
-              text: 'Add Linked Recipe',
+              text: 'Add Sub-Recipe',
               color: model.theme,
               padding: true,
-              onPressed: () => setState(() => _recipe.addLinkedRecipe()),
+              onPressed: () => setState(() => _recipe.addSubRecipe()),
             ),
             ReorderableColumn(
               header: Header(

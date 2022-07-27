@@ -8,13 +8,13 @@ import '../model/app_model.dart';
 import '../model/recipe.dart';
 import 'rounded_container.dart';
 
-class LinkedRecipe extends StatelessWidget {
+class SubRecipe extends StatelessWidget {
   final String recipeId;
   final AppModel model;
 
   Recipe get recipe => model.recipes.where((rec) => recipeId == rec.id).first;
 
-  const LinkedRecipe({
+  const SubRecipe({
     Key? key,
     required this.recipeId,
     required this.model,
@@ -35,24 +35,23 @@ class LinkedRecipe extends StatelessWidget {
         padding: false,
         child: Row(
           children: [
-            recipe.images.isNotEmpty
-                ? Expanded(
-                    child: AspectRatio(
-                      aspectRatio: 1,
-                      child: Container(
-                        decoration: BoxDecoration(
-                          image: DecorationImage(
-                            image: Image.memory(
+            Expanded(
+              child: AspectRatio(
+                aspectRatio: 1,
+                child: Container(
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: recipe.images.isNotEmpty
+                          ? Image.memory(
                               base64Decode(recipe.images[0]),
-                            ).image,
-                            fit: BoxFit.cover,
-                            filterQuality: FilterQuality.low,
-                          ),
-                        ),
-                      ),
+                            ).image
+                          : Image.asset('assets/images/no-image.png').image,
+                      fit: BoxFit.cover,
                     ),
-                  )
-                : Container(),
+                  ),
+                ),
+              ),
+            ),
             Expanded(
               child: Padding(
                 padding: const EdgeInsets.all(ViewConstants.smallPadding),
@@ -64,7 +63,7 @@ class LinkedRecipe extends StatelessWidget {
                   ),
                 ),
               ),
-            )
+            ),
           ],
         ),
       ),

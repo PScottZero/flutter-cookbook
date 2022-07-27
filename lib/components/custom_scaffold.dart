@@ -1,3 +1,4 @@
+import 'package:cookbook/components/search_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -39,6 +40,10 @@ class CustomScaffold extends StatelessWidget {
         ),
         actions: appBarActions,
         iconTheme: IconThemeData(color: appBarTextColor),
+        bottom: const PreferredSize(
+          preferredSize: Size.fromHeight(48),
+          child: SearchBar(),
+        ),
       ),
       backgroundColor: backgroundColor,
       floatingActionButton: floatingActionButton,

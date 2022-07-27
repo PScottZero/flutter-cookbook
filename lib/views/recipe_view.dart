@@ -1,5 +1,5 @@
 import 'package:cookbook/components/confirm_cancel_dialog.dart';
-import 'package:cookbook/components/linked_recipe.dart';
+import 'package:cookbook/components/sub_recipe.dart';
 import 'package:cookbook/components/meal_types.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -13,10 +13,23 @@ import '../model/app_model.dart';
 import '../model/recipe.dart';
 import 'edit_recipe_view.dart';
 
-class RecipeView extends StatelessWidget {
+class RecipeView extends StatefulWidget {
   final Recipe recipe;
 
   const RecipeView({Key? key, required this.recipe}) : super(key: key);
+
+  @override
+  State<RecipeView> createState() => _RecipeViewState();
+}
+
+class _RecipeViewState extends State<RecipeView> {
+  late Recipe _recipe;
+
+  @override
+  void initState() {
+    super.initState();
+    _recipe = widget.recipe;
+  }
 
   void _showDeleteDialog(AppModel model, BuildContext context) => showDialog(
         context: context,
@@ -25,7 +38,7 @@ class RecipeView extends StatelessWidget {
           message: 'Are you sure you want to delete this recipe?',
           confirmAction: 'Delete',
           onConfirmed: () {
-            model.deleteRecipe(recipe);
+            model.deleteRecipe(_recipe);
             Navigator.pop(context);
             Navigator.pop(context);
           },
@@ -37,18 +50,23 @@ class RecipeView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<AppModel>(
       builder: (context, model, child) => CustomScaffold(
-        title: recipe.name,
+        title: _recipe.name,
         appBarColor: model.primaryColor,
         appBarTextColor: model.accentColor,
         backgroundColor: model.accentColor,
         appBarActions: [
           IconButton(
-            onPressed: () => Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => EditRecipeView(recipe: recipe),
-              ),
-            ),
+            onPressed: () async {
+              var recipe = await Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => EditRecipeView(recipe: _recipe),
+                ),
+              );
+              if (recipe != null) {
+                setState(() => _recipe = recipe);
+              }
+            },
             icon: Icon(
               Icons.edit,
               color: model.accentColor,
@@ -64,8 +82,8 @@ class RecipeView extends StatelessWidget {
         ],
         body: ListView(
           children: [
-            recipe.images.isNotEmpty
-                ? ImageCarousel(images: recipe.images)
+            _recipe.images.isNotEmpty
+                ? ImageCarousel(images: _recipe.images)
                 : const SizedBox(height: ViewConstants.smallPadding / 2),
             Padding(
               padding: const EdgeInsets.only(
@@ -73,7 +91,7 @@ class RecipeView extends StatelessWidget {
                 bottom: ViewConstants.smallPadding,
               ),
               child: MealTypes(
-                selectedMealTypes: recipe.mealTypes,
+                selectedMealTypes: _recipe.mealTypes,
                 editable: false,
               ),
             ),
@@ -82,10 +100,10 @@ class RecipeView extends StatelessWidget {
               color: model.theme,
             ),
             Column(
-              children: recipe.ingredients
+              children: _recipe.ingredients
                   .map(
                     (ingredient) => ingredient.recipeId != null
-                        ? LinkedRecipe(
+                        ? SubRecipe(
                             recipeId: ingredient.recipeId!,
                             model: model,
                           )
@@ -98,7 +116,7 @@ class RecipeView extends StatelessWidget {
               color: model.theme,
             ),
             Column(
-              children: recipe.instructions
+              children: _recipe.instructions
                   .map(
                     (instruction) => TextPill(text: instruction.value),
                   )

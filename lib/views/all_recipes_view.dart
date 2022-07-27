@@ -40,7 +40,7 @@ class AllRecipesView extends StatelessWidget {
               children: [
                 const SizedBox(height: ViewConstants.smallPadding),
                 MealTypes(
-                  selectedMealTypes: model.filters,
+                  selectedMealTypes: model.mealTypeFilters,
                   toggleMealType: (mealType) =>
                       model.toggleMealTypeFilter(mealType),
                 ),

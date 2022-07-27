@@ -1,12 +1,12 @@
-import 'package:cookbook/components/custom_text_field.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import '../constants/view_constants.dart';
 import '../model/ingredient.dart';
 import '../model/unit.dart';
+import 'custom_text_field.dart';
 import 'rounded_button.dart';
 import 'rounded_container.dart';
-import 'unit_dropdown.dart';
 
 class EditIngredient extends StatefulWidget {
   final Ingredient ingredient;
@@ -56,11 +56,27 @@ class _EditIngredientState extends State<EditIngredient> {
             onChanged: (amount) => widget.ingredient.amount = amount,
           ),
           const SizedBox(height: ViewConstants.smallPadding),
-          UnitDropdown(
-            unit: widget.ingredient.unit,
+          DropdownButtonFormField<Unit>(
+            value: widget.ingredient.unit,
+            isExpanded: true,
             onChanged: (unit) => setState(
               () => widget.ingredient.unit = unit ?? Unit.none,
             ),
+            style: GoogleFonts.comfortaa(
+              fontSize: ViewConstants.fontSize,
+              color: Colors.black,
+            ),
+            decoration: const InputDecoration(
+              labelText: 'Unit',
+            ),
+            items: Unit.values
+                .map(
+                  (unit) => DropdownMenuItem(
+                    value: unit,
+                    child: Text(unit.name),
+                  ),
+                )
+                .toList(),
           ),
           const SizedBox(height: ViewConstants.smallPadding),
           widget.ingredient.unit == Unit.custom

@@ -36,19 +36,21 @@ class AppModel extends ChangeNotifier {
     var filtered = recipes.where(
       (recipe) {
         var hasMealType = false;
-        for (var mealType in filters) {
+        for (var mealType in mealTypeFilters) {
           if (recipe.mealTypes.contains(mealType)) {
             hasMealType = true;
           }
         }
-        return hasMealType || filters.isEmpty;
+        return (hasMealType || mealTypeFilters.isEmpty) &&
+            recipe.name.toLowerCase().contains(searchString.toLowerCase());
       },
     ).toList();
     filtered.sort((a, b) => a.name.compareTo(b.name));
     return filtered;
   }
 
-  List<MealType> filters = [];
+  List<MealType> mealTypeFilters = [];
+  String searchString = '';
   MaterialColor theme = Colors.teal;
   Color get primaryColor => theme[300]!;
   Color get accentColor => theme[50]!;
@@ -79,12 +81,13 @@ class AppModel extends ChangeNotifier {
   List<Recipe> recipesByMealType(MealType mealType) =>
       recipes.where((recipe) => recipe.mealTypes.contains(mealType)).toList();
 
-  bool mealTypeIsSelected(MealType mealType) => filters.contains(mealType);
+  bool mealTypeIsSelected(MealType mealType) =>
+      mealTypeFilters.contains(mealType);
 
   void toggleMealTypeFilter(MealType mealType) {
     mealTypeIsSelected(mealType)
-        ? filters.remove(mealType)
-        : filters.add(mealType);
+        ? mealTypeFilters.remove(mealType)
+        : mealTypeFilters.add(mealType);
     notifyListeners();
   }
 
@@ -146,6 +149,11 @@ class AppModel extends ChangeNotifier {
       return 'Successfully restored recipes';
     }
     return 'Permissions error';
+  }
+
+  void setSearchString(String search) {
+    searchString = search;
+    notifyListeners();
   }
 
   void setTheme(MaterialColor materialColor) async {

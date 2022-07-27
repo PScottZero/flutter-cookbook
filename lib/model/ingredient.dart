@@ -23,7 +23,7 @@ class Ingredient {
 
   Ingredient.empty() : this(name: '', amount: '');
 
-  Ingredient.linkedRecipe()
+  Ingredient.subRecipe()
       : this(
           name: '',
           amount: '',
@@ -35,23 +35,38 @@ class Ingredient {
         amount: amount,
         unit: unit,
         customUnit: customUnit,
+        recipeId: recipeId,
       );
+
+  bool amountIsPlural(String amount) {
+    var wholeNumber = RegExp(r'\d+');
+    var fraction = RegExp(r'\d+/\d+');
+    var mixedFraction = RegExp(r'\d+ \d+/\d+');
+
+    var isPluralUnit = unit != Unit.oz &&
+        unit != Unit.ml &&
+        unit != Unit.g &&
+        unit != Unit.custom;
+
+    if (mixedFraction.hasMatch(amount)) {
+      return isPluralUnit;
+    } else if (fraction.hasMatch(amount)) {
+      return false;
+    } else if (wholeNumber.hasMatch(amount)) {
+      return amount != '1' && isPluralUnit;
+    }
+    return false;
+  }
 
   @override
   String toString() {
     if (unit != Unit.none) {
-      var plural = amount != '1' &&
-          unit != Unit.oz &&
-          unit != Unit.ml &&
-          unit != Unit.g &&
-          unit != Unit.custom;
-      var unitStr = unit == Unit.custom ? customUnit : unit.name;
-      return plural
+      var unitStr = capitalize(unit == Unit.custom ? customUnit : unit.name);
+      return amountIsPlural(amount)
           ? '$amount ${unitStr}s of ${capitalizeAllWords(name)}'
           : '$amount $unitStr of ${capitalizeAllWords(name)}';
     } else {
-      var plural = amount != '1';
-      return plural ? '$amount ${name}s' : '$amount $name';
+      return amountIsPlural(amount) ? '$amount ${name}s' : '$amount $name';
     }
   }
 

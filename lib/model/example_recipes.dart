@@ -36,7 +36,10 @@ Future<List<Recipe>> get exampleRecipes async => [
             'Add mixture back to saucepan and heat on low until mixture reaches 180°F',
           ),
           Instruction(
-            'Cool mixture down in ice bath for 5 min then',
+            'Cool mixture down in ice bath for 5 min then cool in refrigerator for a few hours',
+          ),
+          Instruction(
+            'Pour mixture into ice cream maker and churn until ice cream thickens',
           ),
         ],
         images: [

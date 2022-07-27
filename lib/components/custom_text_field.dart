@@ -7,15 +7,19 @@ class CustomTextField extends StatefulWidget {
   final Function(String) onChanged;
   final String? label;
   final int maxLines;
+  final Color textColor;
   final TextCapitalization capitalization;
+  final bool plain;
 
   const CustomTextField({
     Key? key,
-    required this.text,
+    this.text = '',
     required this.onChanged,
     this.label,
     this.maxLines = 1,
+    this.textColor = Colors.black,
     this.capitalization = TextCapitalization.words,
+    this.plain = false,
   }) : super(key: key);
 
   @override
@@ -40,6 +44,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
       minLines: 1,
       maxLines: widget.maxLines,
       decoration: InputDecoration(
+        border: widget.plain ? InputBorder.none : null,
         labelText: widget.label,
         hintText: widget.label != null
             ? 'Enter ${widget.label!.toLowerCase()}'
