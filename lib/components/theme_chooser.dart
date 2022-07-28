@@ -36,7 +36,7 @@ class ThemeChooser extends StatelessWidget {
                       onTap: () => model.setTheme(theme),
                       child: Container(
                         decoration: BoxDecoration(
-                          color: theme.materialColor,
+                          color: theme.primaryColor,
                           borderRadius: BorderRadius.circular(
                             ViewConstants.maxBorderRadius,
                           ),
@@ -46,7 +46,7 @@ class ThemeChooser extends StatelessWidget {
                                   width: ViewConstants.highlightedBorderWidth,
                                 )
                               : Border.all(
-                                  color: theme.materialColor,
+                                  color: theme.primaryColor,
                                   width: ViewConstants.highlightedBorderWidth,
                                 ),
                         ),

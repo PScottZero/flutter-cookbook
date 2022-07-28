@@ -144,7 +144,6 @@ class _RecipeViewState extends State<RecipeView> {
                                 (instruction) => RoundedContainer(
                                   child: Text(
                                     instruction.value,
-                                    textAlign: TextAlign.center,
                                     style: const TextStyle(
                                       fontSize: ViewConstants.fontSize,
                                     ),
