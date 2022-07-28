@@ -1,18 +1,18 @@
-import 'package:cookbook/components/custom_text_field.dart';
-import 'package:cookbook/components/edit_sub_recipe.dart';
-import 'package:cookbook/components/meal_types.dart';
-import 'package:cookbook/components/rounded_container.dart';
-import 'package:cookbook/constants/view_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:reorderables/reorderables.dart';
 
 import '../components/custom_scaffold.dart';
+import '../components/custom_text_field.dart';
+import '../components/edit_sub_recipe.dart';
 import '../components/header.dart';
 import '../components/image_picker.dart';
 import '../components/edit_ingredient.dart';
 import '../components/edit_instruction.dart';
+import '../components/meal_types.dart';
 import '../components/rounded_button.dart';
+import '../components/rounded_container.dart';
+import '../constants/view_constants.dart';
 import '../model/app_model.dart';
 import '../model/recipe.dart';
 
@@ -55,9 +55,9 @@ class _EditRecipeViewState extends State<EditRecipeView> {
     return Consumer<AppModel>(
       builder: (context, model, child) => CustomScaffold(
         title: title,
-        appBarColor: model.primaryColor,
-        appBarTextColor: model.accentColor,
-        backgroundColor: model.accentColor,
+        appBarColor: model.theme.primaryColor,
+        appBarTextColor: model.theme.accentColor1,
+        backgroundColor: model.theme.accentColor1,
         appBarActions: [
           IconButton(
             onPressed: () {
@@ -66,7 +66,7 @@ class _EditRecipeViewState extends State<EditRecipeView> {
             },
             icon: Icon(
               Icons.save,
-              color: model.accentColor,
+              color: model.theme.accentColor1,
             ),
           ),
         ],
@@ -74,7 +74,7 @@ class _EditRecipeViewState extends State<EditRecipeView> {
           children: [
             Header(
               text: 'Recipe Name',
-              color: model.theme,
+              textColor: model.theme.primaryColor,
               bottomPadding: false,
             ),
             RoundedContainer(
@@ -86,7 +86,7 @@ class _EditRecipeViewState extends State<EditRecipeView> {
             ),
             Header(
               text: 'Meal Types',
-              color: model.theme,
+              textColor: model.theme.primaryColor,
               bottomPadding: false,
             ),
             Padding(
@@ -105,23 +105,23 @@ class _EditRecipeViewState extends State<EditRecipeView> {
             ),
             Header(
               text: 'Images',
-              color: model.theme,
+              textColor: model.theme.primaryColor,
               bottomPadding: false,
             ),
             ImagePicker(
               images: _recipe.images,
+              theme: model.theme,
               addImage: (image) => setState(
                 () => _recipe.images.add(image),
               ),
               deleteImage: (index) => setState(
                 () => _recipe.images.removeAt(index),
               ),
-              color: model.theme,
             ),
             ReorderableColumn(
               header: Header(
                 text: 'Ingredients',
-                color: model.theme,
+                textColor: model.theme.primaryColor,
               ),
               onReorder: (oldIndex, newIndex) => setState(
                 () => _recipe.ingredients.insert(
@@ -135,33 +135,32 @@ class _EditRecipeViewState extends State<EditRecipeView> {
                       ? EditSubRecipe(
                           key: ValueKey(index),
                           ingredient: _recipe.ingredients[index],
-                          color: model.theme,
                           delete: () => _deleteIngredient(index),
                         )
                       : EditIngredient(
                           key: ValueKey(index),
                           ingredient: _recipe.ingredients[index],
-                          color: model.theme,
+                          theme: model.theme,
                           delete: () => _deleteIngredient(index),
                         ),
               ],
             ),
             RoundedButton(
               text: 'Add Ingredient',
-              color: model.theme,
+              theme: model.theme,
               padding: true,
               onPressed: () => setState(() => _recipe.addIngredient()),
             ),
             RoundedButton(
               text: 'Add Sub-Recipe',
-              color: model.theme,
+              theme: model.theme,
               padding: true,
               onPressed: () => setState(() => _recipe.addSubRecipe()),
             ),
             ReorderableColumn(
               header: Header(
                 text: 'Instructions',
-                color: model.theme,
+                textColor: model.theme.primaryColor,
               ),
               onReorder: (oldIndex, newIndex) => setState(
                 () => _recipe.instructions.insert(
@@ -176,7 +175,7 @@ class _EditRecipeViewState extends State<EditRecipeView> {
                   EditInstruction(
                     key: ValueKey(index),
                     instruction: _recipe.instructions[index],
-                    color: model.theme,
+                    theme: model.theme,
                     delete: () => setState(
                       () => _recipe.deleteInstruction(
                         _recipe.instructions[index],
@@ -187,7 +186,7 @@ class _EditRecipeViewState extends State<EditRecipeView> {
             ),
             RoundedButton(
               text: 'Add Instruction',
-              color: model.theme,
+              theme: model.theme,
               padding: true,
               onPressed: () => setState(() => _recipe.addInstruction()),
             ),

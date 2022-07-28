@@ -1,13 +1,14 @@
-import 'package:cookbook/components/confirm_cancel_dialog.dart';
-import 'package:cookbook/components/sub_recipe.dart';
-import 'package:cookbook/components/meal_types.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../components/confirm_cancel_dialog.dart';
 import '../components/custom_scaffold.dart';
 import '../components/header.dart';
 import '../components/image_carousel.dart';
-import '../components/text_pill.dart';
+import '../components/ingredient_pill.dart';
+import '../components/instruction_pill.dart';
+import '../components/meal_types.dart';
+import '../components/sub_recipe.dart';
 import '../constants/view_constants.dart';
 import '../model/app_model.dart';
 import '../model/recipe.dart';
@@ -37,12 +38,12 @@ class _RecipeViewState extends State<RecipeView> {
           title: 'Delete Recipe',
           message: 'Are you sure you want to delete this recipe?',
           confirmAction: 'Delete',
+          backgroundColor: model.theme.accentColor1,
           onConfirmed: () {
             model.deleteRecipe(_recipe);
             Navigator.pop(context);
             Navigator.pop(context);
           },
-          color: model.theme,
         ),
       );
 
@@ -51,9 +52,9 @@ class _RecipeViewState extends State<RecipeView> {
     return Consumer<AppModel>(
       builder: (context, model, child) => CustomScaffold(
         title: _recipe.name,
-        appBarColor: model.primaryColor,
-        appBarTextColor: model.accentColor,
-        backgroundColor: model.accentColor,
+        appBarColor: model.theme.primaryColor,
+        appBarTextColor: model.theme.accentColor1,
+        backgroundColor: model.theme.accentColor1,
         appBarActions: [
           IconButton(
             onPressed: () async {
@@ -69,14 +70,14 @@ class _RecipeViewState extends State<RecipeView> {
             },
             icon: Icon(
               Icons.edit,
-              color: model.accentColor,
+              color: model.theme.accentColor1,
             ),
           ),
           IconButton(
             onPressed: () => _showDeleteDialog(model, context),
             icon: Icon(
               Icons.delete,
-              color: model.accentColor,
+              color: model.theme.accentColor1,
             ),
           ),
         ],
@@ -85,19 +86,21 @@ class _RecipeViewState extends State<RecipeView> {
             _recipe.images.isNotEmpty
                 ? ImageCarousel(images: _recipe.images)
                 : const SizedBox(height: ViewConstants.smallPadding / 2),
-            Padding(
-              padding: const EdgeInsets.only(
-                top: ViewConstants.smallPadding,
-                bottom: ViewConstants.smallPadding,
-              ),
-              child: MealTypes(
-                selectedMealTypes: _recipe.mealTypes,
-                editable: false,
-              ),
-            ),
+            _recipe.mealTypes.isNotEmpty
+                ? Padding(
+                    padding: const EdgeInsets.only(
+                      top: ViewConstants.smallPadding,
+                      bottom: ViewConstants.smallPadding,
+                    ),
+                    child: MealTypes(
+                      selectedMealTypes: _recipe.mealTypes,
+                      editable: false,
+                    ),
+                  )
+                : Container(),
             Header(
               text: 'Ingredients',
-              color: model.theme,
+              textColor: model.theme.primaryColor,
             ),
             Column(
               children: _recipe.ingredients
@@ -107,18 +110,21 @@ class _RecipeViewState extends State<RecipeView> {
                             recipeId: ingredient.recipeId!,
                             model: model,
                           )
-                        : TextPill(text: '$ingredient'),
+                        : IngredientPill(
+                            ingredient: ingredient,
+                            theme: model.theme,
+                          ),
                   )
                   .toList(),
             ),
             Header(
               text: 'Instructions',
-              color: model.theme,
+              textColor: model.theme.primaryColor,
             ),
             Column(
               children: _recipe.instructions
                   .map(
-                    (instruction) => TextPill(text: instruction.value),
+                    (instruction) => InstructionPill(text: instruction.value),
                   )
                   .toList(),
             ),

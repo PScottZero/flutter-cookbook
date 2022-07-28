@@ -7,7 +7,7 @@ class CustomTextField extends StatefulWidget {
   final Function(String) onChanged;
   final String? label;
   final int maxLines;
-  final Color textColor;
+  final Color? textColor;
   final TextCapitalization capitalization;
   final bool plain;
 
@@ -17,7 +17,7 @@ class CustomTextField extends StatefulWidget {
     required this.onChanged,
     this.label,
     this.maxLines = 1,
-    this.textColor = Colors.black,
+    this.textColor,
     this.capitalization = TextCapitalization.words,
     this.plain = false,
   }) : super(key: key);
@@ -39,10 +39,14 @@ class _CustomTextFieldState extends State<CustomTextField> {
   Widget build(BuildContext context) {
     return TextField(
       controller: _textEditingController,
-      style: const TextStyle(fontSize: ViewConstants.fontSize),
+      style: TextStyle(
+        fontSize: ViewConstants.fontSize,
+        color: widget.textColor,
+      ),
       textCapitalization: widget.capitalization,
       minLines: 1,
       maxLines: widget.maxLines,
+      cursorColor: widget.textColor,
       decoration: InputDecoration(
         border: widget.plain ? InputBorder.none : null,
         labelText: widget.label,

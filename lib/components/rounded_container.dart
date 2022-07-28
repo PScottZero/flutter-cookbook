@@ -4,12 +4,14 @@ import '../constants/view_constants.dart';
 
 class RoundedContainer extends StatelessWidget {
   final Widget child;
+  final Color backgroundColor;
   final bool padding;
   final bool margin;
 
   const RoundedContainer({
     Key? key,
     required this.child,
+    this.backgroundColor = Colors.white,
     this.padding = true,
     this.margin = false,
   }) : super(key: key);
@@ -28,7 +30,7 @@ class RoundedContainer extends StatelessWidget {
         borderRadius: BorderRadius.circular(
           ViewConstants.largeBorderRadius,
         ),
-        color: Colors.white,
+        color: backgroundColor,
       ),
       child: child,
     );

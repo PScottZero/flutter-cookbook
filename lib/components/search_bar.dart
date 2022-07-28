@@ -1,12 +1,15 @@
-import 'package:cookbook/components/custom_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../constants/view_constants.dart';
 import '../model/app_model.dart';
+import '../model/app_theme.dart';
+import 'custom_text_field.dart';
 
 class SearchBar extends StatelessWidget {
-  const SearchBar({Key? key}) : super(key: key);
+  final AppTheme theme;
+
+  const SearchBar({Key? key, required this.theme}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -20,19 +23,17 @@ class SearchBar extends StatelessWidget {
           ),
           width: MediaQuery.of(context).size.width,
           decoration: BoxDecoration(
-            color: model.theme[100],
+            color: theme.accentColor2,
             borderRadius: BorderRadius.circular(100),
           ),
           child: Row(
             children: [
-              Icon(
-                Icons.search,
-                color: model.theme[300],
-              ),
+              Icon(Icons.search, color: theme.primaryColor),
               const SizedBox(width: ViewConstants.smallPadding / 2),
               Expanded(
                 child: CustomTextField(
                   onChanged: (search) => model.setSearchString(search),
+                  textColor: model.theme.primaryColor,
                   plain: true,
                 ),
               ),

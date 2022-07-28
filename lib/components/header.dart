@@ -4,13 +4,13 @@ import '../constants/view_constants.dart';
 
 class Header extends StatelessWidget {
   final String text;
-  final MaterialColor color;
+  final Color textColor;
   final bool bottomPadding;
 
   const Header({
     Key? key,
     required this.text,
-    required this.color,
+    required this.textColor,
     this.bottomPadding = true,
   }) : super(key: key);
 
@@ -34,7 +34,7 @@ class Header extends StatelessWidget {
           // textAlign: TextAlign.center,
           style: TextStyle(
             fontSize: ViewConstants.fontSize,
-            color: color[300],
+            color: textColor,
           ),
         ),
       ),

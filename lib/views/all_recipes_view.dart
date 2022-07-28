@@ -5,6 +5,7 @@ import '../components/add_recipe_button.dart';
 import '../components/custom_scaffold.dart';
 import '../components/meal_types.dart';
 import '../components/recipe_tile.dart';
+import '../components/search_bar.dart';
 import '../constants/view_constants.dart';
 import '../model/app_model.dart';
 import 'settings_view.dart';
@@ -18,6 +19,9 @@ class AllRecipesView extends StatelessWidget {
       builder: (context, model, child) {
         return CustomScaffold(
           title: 'Recipes',
+          appBarColor: model.theme.primaryColor,
+          appBarTextColor: model.theme.accentColor1,
+          backgroundColor: model.theme.accentColor1,
           appBarActions: [
             IconButton(
               onPressed: () => Navigator.push(
@@ -28,13 +32,14 @@ class AllRecipesView extends StatelessWidget {
               ),
               icon: Icon(
                 Icons.settings,
-                color: model.accentColor,
+                color: model.theme.accentColor1,
               ),
             ),
           ],
-          appBarColor: model.primaryColor,
-          appBarTextColor: model.accentColor,
-          backgroundColor: model.accentColor,
+          bottom: PreferredSize(
+            preferredSize: const Size.fromHeight(48),
+            child: SearchBar(theme: model.theme),
+          ),
           body: Consumer<AppModel>(
             builder: (context, model, child) => Column(
               children: [
@@ -55,7 +60,8 @@ class AllRecipesView extends StatelessWidget {
                         .map(
                           (recipe) => RecipeTile(
                             recipe: recipe,
-                            primaryColor: const Color(0x77000000),
+                            primaryColor:
+                                ViewConstants.imageTextBackgroundColor,
                           ),
                         )
                         .toList(),
@@ -65,8 +71,8 @@ class AllRecipesView extends StatelessWidget {
             ),
           ),
           floatingActionButton: AddRecipeButton(
-            backgroundColor: model.primaryColor,
-            textColor: model.accentColor,
+            backgroundColor: model.theme.primaryColor,
+            textColor: model.theme.accentColor1,
             model: model,
           ),
         );

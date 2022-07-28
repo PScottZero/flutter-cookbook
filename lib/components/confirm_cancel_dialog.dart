@@ -7,21 +7,21 @@ class ConfirmCancelDialog extends StatelessWidget {
   final String message;
   final String confirmAction;
   final VoidCallback onConfirmed;
-  final MaterialColor color;
+  final Color backgroundColor;
 
   const ConfirmCancelDialog({
     required this.title,
     required this.message,
     required this.confirmAction,
     required this.onConfirmed,
-    required this.color,
+    required this.backgroundColor,
     Key? key,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      backgroundColor: color[50],
+      backgroundColor: backgroundColor,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(
           ViewConstants.largeBorderRadius,

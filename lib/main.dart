@@ -24,7 +24,7 @@ class Cookbook extends StatelessWidget {
         title: 'Cookbook',
         theme: ThemeData(
           fontFamily: GoogleFonts.comfortaa().fontFamily,
-          primarySwatch: model.theme,
+          primarySwatch: model.theme.materialColor,
         ),
         debugShowCheckedModeBanner: false,
         home: const AllRecipesView(),

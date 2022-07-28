@@ -2,11 +2,12 @@ import 'package:flutter/material.dart';
 
 import '../constants/functions.dart';
 import '../constants/view_constants.dart';
+import '../model/app_theme.dart';
 
 class RoundedButton extends StatelessWidget {
   final String? text;
   final IconData? icon;
-  final MaterialColor color;
+  final AppTheme theme;
   final Function() onPressed;
   final bool padding;
 
@@ -14,7 +15,7 @@ class RoundedButton extends StatelessWidget {
     Key? key,
     this.text,
     this.icon,
-    required this.color,
+    required this.theme,
     required this.onPressed,
     this.padding = false,
   }) : super(key: key);
@@ -33,7 +34,7 @@ class RoundedButton extends StatelessWidget {
       child: TextButton(
         onPressed: onPressed,
         style: ButtonStyle(
-          backgroundColor: msp(color[300]),
+          backgroundColor: msp(theme.primaryColor),
           padding: padding
               ? msp(
                   const EdgeInsets.all(
@@ -54,14 +55,14 @@ class RoundedButton extends StatelessWidget {
               ? Text(
                   text!,
                   style: TextStyle(
-                    color: color[50],
+                    color: theme.accentColor1,
                     fontSize: ViewConstants.fontSize,
                   ),
                 )
               : Icon(
                   icon,
                   size: 24,
-                  color: color[50],
+                  color: theme.accentColor1,
                 ),
         ),
       ),

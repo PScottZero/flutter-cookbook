@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../constants/view_constants.dart';
+import '../model/app_theme.dart';
 import '../model/ingredient.dart';
 import '../model/unit.dart';
 import 'custom_text_field.dart';
@@ -10,13 +11,13 @@ import 'rounded_container.dart';
 
 class EditIngredient extends StatefulWidget {
   final Ingredient ingredient;
-  final MaterialColor color;
+  final AppTheme theme;
   final Function() delete;
 
   const EditIngredient({
     Key? key,
     required this.ingredient,
-    required this.color,
+    required this.theme,
     required this.delete,
   }) : super(key: key);
 
@@ -94,7 +95,7 @@ class _EditIngredientState extends State<EditIngredient> {
               : Container(),
           RoundedButton(
             icon: Icons.delete,
-            color: widget.color,
+            theme: widget.theme,
             onPressed: widget.delete,
           ),
         ],

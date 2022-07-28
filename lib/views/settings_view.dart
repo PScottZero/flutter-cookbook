@@ -1,7 +1,7 @@
-import 'package:cookbook/components/confirm_cancel_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../components/confirm_cancel_dialog.dart';
 import '../components/custom_scaffold.dart';
 import '../components/header.dart';
 import '../components/rounded_button.dart';
@@ -47,7 +47,7 @@ class _SettingsViewState extends State<SettingsView> {
         context: context,
         builder: (context) => ConfirmCancelDialog(
           title: 'Backup Recipes',
-          color: model.theme,
+          backgroundColor: model.theme.accentColor2,
           message: 'Are you sure you want to backup your recipes? '
               'Any existing backup will be overwritted.',
           confirmAction: 'Backup',
@@ -67,7 +67,7 @@ class _SettingsViewState extends State<SettingsView> {
         context: context,
         builder: (context) => ConfirmCancelDialog(
           title: 'Restore Recipes',
-          color: model.theme,
+          backgroundColor: model.theme.accentColor1,
           message:
               'Are you sure you want to restore your recipes from a backup? '
               'Any existing recipes in the app will be deleted.',
@@ -93,23 +93,22 @@ class _SettingsViewState extends State<SettingsView> {
           title: 'Settings',
           body: ListView(
             children: [
-              ThemeChooser(selectedTheme: model.theme),
+              const ThemeChooser(),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Header(
-                    text: 'Backup/Restore',
-                    color: model.theme,
-                  ),
+                      text: 'Backup/Restore',
+                      textColor: model.theme.primaryColor),
                   RoundedButton(
                     text: 'Backup Recipes',
-                    color: model.theme,
+                    theme: model.theme,
                     padding: true,
                     onPressed: () => _backupRecipes(model),
                   ),
                   RoundedButton(
                     text: 'Restore Recipes',
-                    color: model.theme,
+                    theme: model.theme,
                     padding: true,
                     onPressed: () => _restoreRecipes(model),
                   ),
@@ -117,9 +116,9 @@ class _SettingsViewState extends State<SettingsView> {
               ),
             ],
           ),
-          appBarColor: model.primaryColor,
-          appBarTextColor: model.accentColor,
-          backgroundColor: model.accentColor,
+          appBarColor: model.theme.primaryColor,
+          appBarTextColor: model.theme.accentColor1,
+          backgroundColor: model.theme.accentColor1,
         );
       },
     );

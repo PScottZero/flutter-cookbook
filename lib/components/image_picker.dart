@@ -1,24 +1,27 @@
 import 'dart:convert';
 
-import 'package:cookbook/components/deletable_image.dart';
-import 'package:cookbook/components/rounded_button.dart';
-import 'package:cookbook/constants/view_constants.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:image_picker/image_picker.dart' as picker;
 import 'package:reorderables/reorderables.dart';
+
+import '../constants/view_constants.dart';
+import '../model/app_theme.dart';
+import 'deletable_image.dart';
+import 'rounded_button.dart';
 
 class ImagePicker extends StatefulWidget {
   final List<String> images;
   final Function(String) addImage;
   final Function(int) deleteImage;
-  final MaterialColor color;
+  final AppTheme theme;
 
   const ImagePicker({
     Key? key,
     required this.images,
     required this.addImage,
     required this.deleteImage,
-    required this.color,
+    required this.theme,
   }) : super(key: key);
 
   @override
@@ -30,10 +33,14 @@ class _ImagePickerState extends State<ImagePicker> {
     var image = await picker.ImagePicker()
         .pickImage(source: picker.ImageSource.gallery);
     if (image != null) {
-      var base64 = base64Encode(await image.readAsBytes());
-      setState(() {
-        widget.images.add(base64);
-      });
+      var compressedImage = await FlutterImageCompress.compressWithFile(
+        image.path,
+        quality: 90,
+      );
+      if (compressedImage != null) {
+        var base64 = base64Encode(compressedImage);
+        setState(() => widget.images.add(base64));
+      }
     }
   }
 
@@ -75,7 +82,7 @@ class _ImagePickerState extends State<ImagePicker> {
               aspectRatio: 1,
               child: RoundedButton(
                 text: 'Add Image',
-                color: widget.color,
+                theme: widget.theme,
                 onPressed: _addImage,
               ),
             ),

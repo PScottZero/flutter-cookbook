@@ -3,10 +3,13 @@ import 'package:flutter/material.dart';
 import '../constants/view_constants.dart';
 import 'rounded_container.dart';
 
-class TextPill extends StatelessWidget {
+class InstructionPill extends StatelessWidget {
   final String text;
 
-  const TextPill({Key? key, required this.text}) : super(key: key);
+  const InstructionPill({
+    Key? key,
+    required this.text,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

@@ -2,18 +2,19 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../constants/theme_options.dart';
+import 'app_theme.dart';
 import 'example_recipes.dart';
 import 'meal_type.dart';
 import 'recipe.dart';
 
 const backupDir = '/storage/emulated/0/Documents/CookbookBU';
 const storageDir = 'recipes';
+const defaultThemeIndex = 6;
 
 List<Recipe> loadRecipesFromAppDirectory(String appDirectory) {
   List<Recipe> recipes = [];
@@ -51,13 +52,11 @@ class AppModel extends ChangeNotifier {
 
   List<MealType> mealTypeFilters = [];
   String searchString = '';
-  MaterialColor theme = Colors.teal;
-  Color get primaryColor => theme[300]!;
-  Color get accentColor => theme[50]!;
+  AppTheme theme = themeOptions[defaultThemeIndex];
 
   AppModel() {
-    // loadTestRecipes();
-    loadRecipes();
+    loadTestRecipes();
+    // loadRecipes();
     loadTheme();
   }
 
@@ -69,7 +68,7 @@ class AppModel extends ChangeNotifier {
 
   void loadTheme() async {
     final preferences = await SharedPreferences.getInstance();
-    theme = themeOptions[preferences.getInt('themeIndex') ?? 6];
+    theme = themeOptions[preferences.getInt('themeIndex') ?? defaultThemeIndex];
     notifyListeners();
   }
 
@@ -156,8 +155,8 @@ class AppModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  void setTheme(MaterialColor materialColor) async {
-    theme = materialColor;
+  void setTheme(AppTheme newTheme) async {
+    theme = newTheme;
     final preferences = await SharedPreferences.getInstance();
     preferences.setInt('themeIndex', themeOptions.indexOf(theme));
     notifyListeners();

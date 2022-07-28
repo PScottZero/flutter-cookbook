@@ -1,4 +1,3 @@
-import 'package:cookbook/components/search_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -9,6 +8,7 @@ class CustomScaffold extends StatelessWidget {
   final Color appBarTextColor;
   final Color backgroundColor;
   final List<Widget>? appBarActions;
+  final PreferredSizeWidget? bottom;
   final Widget? floatingActionButton;
   final Widget? bottomNavigationBar;
 
@@ -20,6 +20,7 @@ class CustomScaffold extends StatelessWidget {
     required this.appBarTextColor,
     required this.backgroundColor,
     this.appBarActions,
+    this.bottom,
     this.floatingActionButton,
     this.bottomNavigationBar,
   }) : super(key: key);
@@ -40,10 +41,7 @@ class CustomScaffold extends StatelessWidget {
         ),
         actions: appBarActions,
         iconTheme: IconThemeData(color: appBarTextColor),
-        bottom: const PreferredSize(
-          preferredSize: Size.fromHeight(48),
-          child: SearchBar(),
-        ),
+        bottom: bottom,
       ),
       backgroundColor: backgroundColor,
       floatingActionButton: floatingActionButton,

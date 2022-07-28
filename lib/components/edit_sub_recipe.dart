@@ -1,8 +1,8 @@
-import 'package:cookbook/model/app_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../constants/view_constants.dart';
+import '../model/app_model.dart';
 import '../model/ingredient.dart';
 import '../model/recipe.dart';
 import 'rounded_button.dart';
@@ -10,13 +10,11 @@ import 'rounded_container.dart';
 
 class EditSubRecipe extends StatelessWidget {
   final Ingredient ingredient;
-  final MaterialColor color;
   final Function() delete;
 
   const EditSubRecipe({
     Key? key,
     required this.ingredient,
-    required this.color,
     required this.delete,
   }) : super(key: key);
 
@@ -46,7 +44,7 @@ class EditSubRecipe extends StatelessWidget {
             const SizedBox(height: ViewConstants.smallPadding),
             RoundedButton(
               icon: Icons.delete,
-              color: color,
+              theme: model.theme,
               onPressed: delete,
             ),
           ],

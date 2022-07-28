@@ -58,15 +58,14 @@ class Ingredient {
     return false;
   }
 
-  @override
-  String toString() {
+  String amountString() {
     if (unit != Unit.none) {
       var unitStr = capitalize(unit == Unit.custom ? customUnit : unit.name);
       return amountIsPlural(amount)
-          ? '$amount ${unitStr}s of ${capitalizeAllWords(name)}'
-          : '$amount $unitStr of ${capitalizeAllWords(name)}';
+          ? '$amount ${unitStr}s'
+          : '$amount $unitStr';
     } else {
-      return amountIsPlural(amount) ? '$amount ${name}s' : '$amount $name';
+      return amount;
     }
   }
 

@@ -1,7 +1,8 @@
 import 'dart:convert';
 
-import 'package:cookbook/constants/view_constants.dart';
 import 'package:flutter/material.dart';
+
+import '../constants/view_constants.dart';
 
 class DeletableImage extends StatelessWidget {
   final String image;

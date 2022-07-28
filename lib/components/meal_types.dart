@@ -9,6 +9,9 @@ class MealTypes extends StatelessWidget {
   final Function(MealType)? toggleMealType;
   final bool editable;
 
+  bool darkTheme(BuildContext context) =>
+      MediaQuery.of(context).platformBrightness == Brightness.dark;
+
   const MealTypes({
     Key? key,
     required this.selectedMealTypes,

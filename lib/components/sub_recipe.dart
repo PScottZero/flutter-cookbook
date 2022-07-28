@@ -1,11 +1,11 @@
 import 'dart:convert';
 
-import 'package:cookbook/views/recipe_view.dart';
 import 'package:flutter/material.dart';
 
 import '../constants/view_constants.dart';
 import '../model/app_model.dart';
 import '../model/recipe.dart';
+import '../views/recipe_view.dart';
 import 'rounded_container.dart';
 
 class SubRecipe extends StatelessWidget {
