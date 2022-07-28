@@ -7,7 +7,7 @@ import 'custom_text_field.dart';
 import 'rounded_button.dart';
 import 'rounded_container.dart';
 
-class EditInstruction extends StatefulWidget {
+class EditInstruction extends StatelessWidget {
   final Instruction instruction;
   final AppTheme theme;
   final Function() delete;
@@ -20,34 +20,21 @@ class EditInstruction extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  State<EditInstruction> createState() => _EditInstructionState();
-}
-
-class _EditInstructionState extends State<EditInstruction> {
-  final TextEditingController _textEditingController = TextEditingController();
-
-  @override
-  void initState() {
-    super.initState();
-    _textEditingController.text = widget.instruction.value;
-  }
-
-  @override
   Widget build(BuildContext context) {
     return RoundedContainer(
       child: Column(
         children: [
           CustomTextField(
-            text: widget.instruction.value,
-            onChanged: (value) => widget.instruction.value = value,
+            text: instruction.value,
+            onChanged: (value) => instruction.value = value,
             capitalization: TextCapitalization.sentences,
-            maxLines: 5,
+            maxLines: ViewConstants.textFieldMaxLines,
           ),
-          const SizedBox(height: ViewConstants.smallPadding),
+          const SizedBox(height: ViewConstants.mediumPadding),
           RoundedButton(
             icon: Icons.delete,
-            theme: widget.theme,
-            onPressed: widget.delete,
+            theme: theme,
+            onPressed: delete,
           ),
         ],
       ),

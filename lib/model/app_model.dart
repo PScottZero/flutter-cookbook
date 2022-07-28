@@ -8,7 +8,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../constants/theme_options.dart';
 import 'app_theme.dart';
-import 'example_recipes.dart';
 import 'meal_type.dart';
 import 'recipe.dart';
 
@@ -33,6 +32,10 @@ List<Recipe> loadRecipesFromAppDirectory(String appDirectory) {
 
 class AppModel extends ChangeNotifier {
   List<Recipe> recipes = [];
+  List<MealType> mealTypeFilters = [];
+  String searchString = '';
+  AppTheme theme = themeOptions[defaultThemeIndex];
+
   List<Recipe> get filteredRecipes {
     var filtered = recipes.where(
       (recipe) {
@@ -50,12 +53,7 @@ class AppModel extends ChangeNotifier {
     return filtered;
   }
 
-  List<MealType> mealTypeFilters = [];
-  String searchString = '';
-  AppTheme theme = themeOptions[defaultThemeIndex];
-
   AppModel() {
-    // loadTestRecipes();
     loadRecipes();
     loadTheme();
   }
@@ -69,11 +67,6 @@ class AppModel extends ChangeNotifier {
   void loadTheme() async {
     final preferences = await SharedPreferences.getInstance();
     theme = themeOptions[preferences.getInt('themeIndex') ?? defaultThemeIndex];
-    notifyListeners();
-  }
-
-  void loadTestRecipes() async {
-    recipes = await exampleRecipes;
     notifyListeners();
   }
 

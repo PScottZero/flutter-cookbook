@@ -5,38 +5,40 @@ import '../constants/view_constants.dart';
 class ConfirmCancelDialog extends StatelessWidget {
   final String title;
   final String message;
-  final String confirmAction;
-  final VoidCallback onConfirmed;
+  final String confirmText;
   final Color backgroundColor;
+  final VoidCallback onConfirmed;
 
   const ConfirmCancelDialog({
+    Key? key,
     required this.title,
     required this.message,
-    required this.confirmAction,
-    required this.onConfirmed,
+    required this.confirmText,
     required this.backgroundColor,
-    Key? key,
+    required this.onConfirmed,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
+      title: Text(title),
       backgroundColor: backgroundColor,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(
           ViewConstants.largeBorderRadius,
         ),
       ),
-      title: Text(title),
       content: Text(
         message,
-        style: const TextStyle(height: 2),
+        style: const TextStyle(
+          height: ViewConstants.dialogTextHeight,
+        ),
       ),
       actions: [
         TextButton(
           onPressed: onConfirmed,
           child: Text(
-            confirmAction,
+            confirmText,
             style: const TextStyle(
               fontSize: ViewConstants.fontSize,
             ),
@@ -48,7 +50,6 @@ class ConfirmCancelDialog extends StatelessWidget {
             'Cancel',
             style: TextStyle(
               fontSize: ViewConstants.fontSize,
-              color: Colors.red,
             ),
           ),
         ),

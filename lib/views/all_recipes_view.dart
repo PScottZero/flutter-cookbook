@@ -37,13 +37,13 @@ class AllRecipesView extends StatelessWidget {
             ),
           ],
           bottom: PreferredSize(
-            preferredSize: const Size.fromHeight(64),
+            preferredSize: const Size.fromHeight(ViewConstants.searchBarHeight),
             child: SearchBar(theme: model.theme),
           ),
           body: Consumer<AppModel>(
             builder: (context, model, child) => Column(
               children: [
-                const SizedBox(height: ViewConstants.smallPadding),
+                const SizedBox(height: ViewConstants.mediumPadding),
                 MealTypes(
                   selectedMealTypes: model.mealTypeFilters,
                   toggleMealType: (mealType) =>
@@ -51,11 +51,11 @@ class AllRecipesView extends StatelessWidget {
                 ),
                 Expanded(
                   child: GridView.count(
-                    crossAxisCount: 2,
-                    childAspectRatio: 1,
-                    mainAxisSpacing: ViewConstants.smallPadding,
-                    crossAxisSpacing: ViewConstants.smallPadding,
-                    padding: const EdgeInsets.all(ViewConstants.smallPadding),
+                    crossAxisCount: ViewConstants.recipeGridColumnCount,
+                    childAspectRatio: ViewConstants.imageAspectRatio,
+                    mainAxisSpacing: ViewConstants.mediumPadding,
+                    crossAxisSpacing: ViewConstants.mediumPadding,
+                    padding: const EdgeInsets.all(ViewConstants.mediumPadding),
                     children: model.filteredRecipes
                         .map(
                           (recipe) => RecipeTile(
@@ -73,7 +73,6 @@ class AllRecipesView extends StatelessWidget {
           floatingActionButton: AddRecipeButton(
             backgroundColor: model.theme.primaryColor,
             textColor: model.theme.accentColor1,
-            model: model,
           ),
         );
       },

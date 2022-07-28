@@ -15,16 +15,16 @@ class ImageIndexIndicator extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(ViewConstants.smallPadding),
+      padding: const EdgeInsets.all(ViewConstants.mediumPadding),
       child: Container(
         padding: const EdgeInsets.fromLTRB(
-          ViewConstants.smallPadding,
-          4,
-          ViewConstants.smallPadding,
-          4,
+          ViewConstants.mediumPadding,
+          ViewConstants.imageIndexPadding,
+          ViewConstants.mediumPadding,
+          ViewConstants.imageIndexPadding,
         ),
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(100),
+          borderRadius: BorderRadius.circular(ViewConstants.maxBorderRadius),
           color: ViewConstants.imageTextBackgroundColor,
         ),
         child: Text(

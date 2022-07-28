@@ -22,9 +22,9 @@ class RoundedContainer extends StatelessWidget {
       padding:
           padding ? const EdgeInsets.all(ViewConstants.largePadding) : null,
       margin: margin
-          ? const EdgeInsets.all(ViewConstants.smallPadding)
-          : const EdgeInsets.only(bottom: ViewConstants.smallPadding),
-      width: MediaQuery.of(context).size.width - ViewConstants.smallPadding * 2,
+          ? const EdgeInsets.all(ViewConstants.mediumPadding)
+          : const EdgeInsets.only(bottom: ViewConstants.mediumPadding),
+      width: MediaQuery.of(context).size.width - ViewConstants.largePadding,
       clipBehavior: Clip.antiAlias,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(

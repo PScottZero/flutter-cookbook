@@ -41,7 +41,7 @@ class EditSubRecipe extends StatelessWidget {
                   )
                   .toList(),
             ),
-            const SizedBox(height: ViewConstants.smallPadding),
+            const SizedBox(height: ViewConstants.mediumPadding),
             RoundedButton(
               icon: Icons.delete,
               theme: model.theme,

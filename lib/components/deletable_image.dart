@@ -18,11 +18,11 @@ class DeletableImage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(
-        left: ViewConstants.smallPadding / 2,
-        right: ViewConstants.smallPadding / 2,
+        left: ViewConstants.smallPadding,
+        right: ViewConstants.smallPadding,
       ),
       child: AspectRatio(
-        aspectRatio: 1,
+        aspectRatio: ViewConstants.imageAspectRatio,
         child: Stack(
           alignment: Alignment.bottomRight,
           children: [
@@ -42,7 +42,7 @@ class DeletableImage extends StatelessWidget {
               onPressed: () => delete((key as ValueKey).value),
               icon: const Icon(
                 Icons.delete,
-                size: 32,
+                size: ViewConstants.deleteIconSize,
               ),
             ),
           ],

@@ -18,20 +18,17 @@ class Header extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.only(
-        top: ViewConstants.smallPadding,
-        bottom: bottomPadding ? ViewConstants.smallPadding : 0,
+        top: ViewConstants.mediumPadding,
+        bottom: bottomPadding ? ViewConstants.mediumPadding : 0,
       ),
       child: Container(
         width: MediaQuery.of(context).size.width,
-        padding: const EdgeInsets.fromLTRB(
-          ViewConstants.smallPadding,
-          0,
-          ViewConstants.smallPadding,
-          0,
+        padding: const EdgeInsets.only(
+          left: ViewConstants.mediumPadding,
+          right: ViewConstants.mediumPadding,
         ),
         child: Text(
           text,
-          // textAlign: TextAlign.center,
           style: TextStyle(
             fontSize: ViewConstants.fontSize,
             color: textColor,

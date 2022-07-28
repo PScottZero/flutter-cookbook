@@ -91,8 +91,8 @@ class _EditRecipeViewState extends State<EditRecipeView> {
             ),
             Padding(
               padding: const EdgeInsets.only(
-                top: ViewConstants.smallPadding,
-                bottom: ViewConstants.smallPadding,
+                top: ViewConstants.mediumPadding,
+                bottom: ViewConstants.mediumPadding,
               ),
               child: MealTypes(
                 selectedMealTypes: _recipe.mealTypes,

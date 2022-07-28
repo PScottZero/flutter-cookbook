@@ -39,7 +39,7 @@ class RecipeTile extends StatelessWidget {
         clipBehavior: Clip.antiAlias,
         child: ConstrainedBox(
           constraints: const BoxConstraints(
-            maxHeight: 100,
+            maxHeight: ViewConstants.imageTextMaxHeight,
             minHeight: 0,
           ),
           child: Container(
@@ -50,8 +50,13 @@ class RecipeTile extends StatelessWidget {
               color: ViewConstants.imageTextBackgroundColor,
             ),
             width: double.infinity,
-            padding: const EdgeInsets.fromLTRB(10, 5, 10, 5),
-            margin: const EdgeInsets.all(10),
+            padding: const EdgeInsets.fromLTRB(
+              ViewConstants.mediumPadding,
+              ViewConstants.smallPadding,
+              ViewConstants.mediumPadding,
+              ViewConstants.smallPadding,
+            ),
+            margin: const EdgeInsets.all(ViewConstants.mediumPadding),
             child: Text(
               recipe.name,
               textAlign: TextAlign.center,

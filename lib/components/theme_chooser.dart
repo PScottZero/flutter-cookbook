@@ -20,15 +20,15 @@ class ThemeChooser extends StatelessWidget {
             textColor: model.theme.primaryColor,
           ),
           SizedBox(
-            height: 230,
+            height: ViewConstants.themeChooserHeight,
             child: GridView.count(
-              crossAxisCount: 5,
-              mainAxisSpacing: ViewConstants.smallPadding,
-              crossAxisSpacing: ViewConstants.smallPadding,
+              crossAxisCount: ViewConstants.themeChooserColumnCount,
+              mainAxisSpacing: ViewConstants.mediumPadding,
+              crossAxisSpacing: ViewConstants.mediumPadding,
               padding: const EdgeInsets.only(
-                left: ViewConstants.smallPadding,
-                right: ViewConstants.smallPadding,
-                bottom: ViewConstants.smallPadding,
+                left: ViewConstants.mediumPadding,
+                right: ViewConstants.mediumPadding,
+                bottom: ViewConstants.mediumPadding,
               ),
               children: themeOptions
                   .map(
@@ -37,12 +37,18 @@ class ThemeChooser extends StatelessWidget {
                       child: Container(
                         decoration: BoxDecoration(
                           color: theme.materialColor,
-                          borderRadius: BorderRadius.circular(100),
+                          borderRadius: BorderRadius.circular(
+                            ViewConstants.maxBorderRadius,
+                          ),
                           border: model.theme == theme
                               ? Border.all(
-                                  color: theme.highlightColor, width: 3)
+                                  color: theme.highlightColor,
+                                  width: ViewConstants.highlightedBorderWidth,
+                                )
                               : Border.all(
-                                  color: theme.materialColor, width: 3),
+                                  color: theme.materialColor,
+                                  width: ViewConstants.highlightedBorderWidth,
+                                ),
                         ),
                       ),
                     ),

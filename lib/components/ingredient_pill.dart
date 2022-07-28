@@ -26,8 +26,8 @@ class IngredientPill extends StatelessWidget {
           Expanded(
             child: Container(
               padding: const EdgeInsets.only(
-                left: ViewConstants.smallPadding,
-                right: ViewConstants.smallPadding,
+                left: ViewConstants.mediumPadding,
+                right: ViewConstants.mediumPadding,
               ),
               child: Text(
                 ingredient.amountString(),
@@ -40,13 +40,13 @@ class IngredientPill extends StatelessWidget {
             ),
           ),
           Expanded(
-            flex: 2,
+            flex: ViewConstants.doubleFlex,
             child: Container(
               color: Colors.white,
               padding: const EdgeInsets.fromLTRB(
-                ViewConstants.smallPadding,
+                ViewConstants.mediumPadding,
                 ViewConstants.largePadding,
-                ViewConstants.smallPadding,
+                ViewConstants.mediumPadding,
                 ViewConstants.largePadding,
               ),
               child: Text(

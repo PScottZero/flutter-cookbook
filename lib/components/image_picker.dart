@@ -33,10 +33,8 @@ class _ImagePickerState extends State<ImagePicker> {
     var image = await picker.ImagePicker()
         .pickImage(source: picker.ImageSource.gallery);
     if (image != null) {
-      var compressedImage = await FlutterImageCompress.compressWithFile(
-        image.path,
-        quality: 90,
-      );
+      var compressedImage =
+          await FlutterImageCompress.compressWithFile(image.path);
       if (compressedImage != null) {
         var base64 = base64Encode(compressedImage);
         setState(() => widget.images.add(base64));
@@ -47,14 +45,14 @@ class _ImagePickerState extends State<ImagePicker> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 200,
+      height: ViewConstants.imagePickerHeight,
       child: ListView(
         scrollDirection: Axis.horizontal,
         padding: const EdgeInsets.only(
-          left: ViewConstants.smallPadding / 2,
-          top: ViewConstants.smallPadding,
-          right: ViewConstants.smallPadding / 2,
-          bottom: ViewConstants.smallPadding,
+          left: ViewConstants.smallPadding,
+          top: ViewConstants.mediumPadding,
+          right: ViewConstants.smallPadding,
+          bottom: ViewConstants.mediumPadding,
         ),
         children: [
           ReorderableRow(
@@ -75,11 +73,11 @@ class _ImagePickerState extends State<ImagePicker> {
           ),
           Padding(
             padding: const EdgeInsets.only(
-              left: ViewConstants.smallPadding / 2,
-              right: ViewConstants.smallPadding / 2,
+              left: ViewConstants.smallPadding,
+              right: ViewConstants.smallPadding,
             ),
             child: AspectRatio(
-              aspectRatio: 1,
+              aspectRatio: ViewConstants.imageAspectRatio,
               child: RoundedButton(
                 text: 'Add Image',
                 theme: widget.theme,

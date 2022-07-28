@@ -18,8 +18,6 @@ class MealTypePill extends StatelessWidget {
         : capitalize(string);
   }
 
-  bool get shouldShow => toggleSelected != null || isSelected;
-
   const MealTypePill({
     Key? key,
     required this.mealType,
@@ -34,37 +32,44 @@ class MealTypePill extends StatelessWidget {
     return toggleSelected != null || isSelected
         ? Container(
             padding: const EdgeInsets.only(
-              left: ViewConstants.smallPadding / 2,
-              right: ViewConstants.smallPadding / 2,
+              left: ViewConstants.smallPadding,
+              right: ViewConstants.smallPadding,
             ),
             child: TextButton(
               onPressed: toggleSelected,
               style: ButtonStyle(
-                padding: msp(const EdgeInsets.all(ViewConstants.smallPadding)),
-                backgroundColor: msp(color[300]),
+                padding: msp(const EdgeInsets.all(ViewConstants.mediumPadding)),
+                backgroundColor: msp(color.shade300),
                 side: msp(
                   BorderSide(
-                    color: color[
-                        toggleSelected != null && isSelected ? 700 : 300]!,
-                    width: 3,
+                    color: toggleSelected != null && isSelected
+                        ? color.shade700
+                        : color.shade300,
+                    width: ViewConstants.highlightedBorderWidth,
                   ),
                 ),
                 shape: msp(
                   RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(100),
+                    borderRadius: BorderRadius.circular(
+                      ViewConstants.maxBorderRadius,
+                    ),
                   ),
                 ),
               ),
               child: SizedBox(
-                height: 60,
+                height: ViewConstants.mealTypePillHeight,
                 child: Row(
                   children: [
-                    Icon(icon, color: color[50], size: 18),
-                    const SizedBox(width: 5),
+                    Icon(
+                      icon,
+                      color: color.shade50,
+                      size: ViewConstants.mealTypeIconSize,
+                    ),
+                    const SizedBox(width: ViewConstants.smallPadding),
                     Text(
                       mealTypeString,
                       style: TextStyle(
-                        color: color[50],
+                        color: color.shade50,
                         fontSize: ViewConstants.fontSize,
                       ),
                     ),

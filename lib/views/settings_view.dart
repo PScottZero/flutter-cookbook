@@ -17,25 +17,62 @@ class SettingsView extends StatefulWidget {
 }
 
 class _SettingsViewState extends State<SettingsView> {
-  BuildContext? buildContext;
+  AppModel? _model;
+  BuildContext? _context;
 
-  void _showSnackbar(BuildContext context, String message) =>
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(message),
+  void _backupRecipes() => showDialog(
+        context: context,
+        builder: (context) => ConfirmCancelDialog(
+          title: 'Backup Recipes',
+          backgroundColor: _model!.theme.accentColor1,
+          message: 'Are you sure you want to backup your recipes? '
+              'Any existing backup will be overwritted.',
+          confirmText: 'Backup',
+          onConfirmed: () async {
+            Navigator.pop(_context!);
+            if (_context != null) {
+              _showLoadingIndicator();
+              var result = await _model!.backupRecipes();
+              Navigator.pop(_context!);
+              _showSnackbar(_context!, result);
+            }
+          },
         ),
       );
 
-  void _showLoadingIndicator(BuildContext context) => showDialog(
-        context: context,
+  void _restoreRecipes() => showDialog(
+        context: _context!,
+        builder: (context) => ConfirmCancelDialog(
+          title: 'Restore Recipes',
+          backgroundColor: _model!.theme.accentColor1,
+          message:
+              'Are you sure you want to restore your recipes from a backup? '
+              'Any existing recipes in the app will be deleted.',
+          confirmText: 'Restore',
+          onConfirmed: () async {
+            Navigator.pop(_context!);
+            if (_context != null) {
+              _showLoadingIndicator();
+              var result = await _model!.restoreRecipes();
+              Navigator.pop(_context!);
+              _showSnackbar(_context!, result);
+            }
+          },
+        ),
+      );
+
+  void _showLoadingIndicator() => showDialog(
+        context: _context!,
         barrierDismissible: false,
         builder: (context) => Dialog(
+          backgroundColor: _model!.theme.accentColor1,
           shape: RoundedRectangleBorder(
-            borderRadius:
-                BorderRadius.circular(ViewConstants.largeBorderRadius),
+            borderRadius: BorderRadius.circular(
+              ViewConstants.largeBorderRadius,
+            ),
           ),
           child: const SizedBox(
-            height: 200,
+            height: ViewConstants.progressBarHeight,
             child: Center(
               child: CircularProgressIndicator(),
             ),
@@ -43,54 +80,22 @@ class _SettingsViewState extends State<SettingsView> {
         ),
       );
 
-  void _backupRecipes(AppModel model) => showDialog(
-        context: context,
-        builder: (context) => ConfirmCancelDialog(
-          title: 'Backup Recipes',
-          backgroundColor: model.theme.accentColor2,
-          message: 'Are you sure you want to backup your recipes? '
-              'Any existing backup will be overwritted.',
-          confirmAction: 'Backup',
-          onConfirmed: () async {
-            Navigator.pop(buildContext!);
-            if (buildContext != null) {
-              _showLoadingIndicator(buildContext!);
-              var result = await model.backupRecipes();
-              Navigator.pop(buildContext!);
-              _showSnackbar(buildContext!, result);
-            }
-          },
-        ),
-      );
-
-  void _restoreRecipes(AppModel model) => showDialog(
-        context: context,
-        builder: (context) => ConfirmCancelDialog(
-          title: 'Restore Recipes',
-          backgroundColor: model.theme.accentColor1,
-          message:
-              'Are you sure you want to restore your recipes from a backup? '
-              'Any existing recipes in the app will be deleted.',
-          confirmAction: 'Restore',
-          onConfirmed: () async {
-            Navigator.pop(buildContext!);
-            if (buildContext != null) {
-              _showLoadingIndicator(buildContext!);
-              var result = await model.restoreRecipes();
-              Navigator.pop(buildContext!);
-              _showSnackbar(buildContext!, result);
-            }
-          },
-        ),
+  void _showSnackbar(BuildContext context, String message) =>
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(message)),
       );
 
   @override
   Widget build(BuildContext context) {
     return Consumer<AppModel>(
       builder: (context, model, child) {
-        buildContext = context;
+        _model = model;
+        _context = context;
         return CustomScaffold(
           title: 'Settings',
+          appBarColor: model.theme.primaryColor,
+          appBarTextColor: model.theme.accentColor1,
+          backgroundColor: model.theme.accentColor1,
           body: ListView(
             children: [
               const ThemeChooser(),
@@ -104,21 +109,18 @@ class _SettingsViewState extends State<SettingsView> {
                     text: 'Backup Recipes',
                     theme: model.theme,
                     padding: true,
-                    onPressed: () => _backupRecipes(model),
+                    onPressed: _backupRecipes,
                   ),
                   RoundedButton(
                     text: 'Restore Recipes',
                     theme: model.theme,
                     padding: true,
-                    onPressed: () => _restoreRecipes(model),
+                    onPressed: _restoreRecipes,
                   ),
                 ],
               ),
             ],
           ),
-          appBarColor: model.theme.primaryColor,
-          appBarTextColor: model.theme.accentColor1,
-          backgroundColor: model.theme.accentColor1,
         );
       },
     );

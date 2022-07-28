@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 
+import '../constants/view_constants.dart';
 import 'image_index_indicator.dart';
 
 class ImageCarousel extends StatelessWidget {
@@ -14,9 +15,9 @@ class ImageCarousel extends StatelessWidget {
   Widget build(BuildContext context) {
     return CarouselSlider(
       options: CarouselOptions(
-        height: 400,
-        viewportFraction: 1.0,
-        aspectRatio: 1,
+        height: ViewConstants.imageCarouselHeight,
+        viewportFraction: ViewConstants.imageCarouselViewportFraction,
+        aspectRatio: ViewConstants.imageAspectRatio,
       ),
       items: <Widget>[
         for (int index = 0; index < images.length; index++)

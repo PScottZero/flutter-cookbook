@@ -26,20 +26,6 @@ class EditIngredient extends StatefulWidget {
 }
 
 class _EditIngredientState extends State<EditIngredient> {
-  final TextEditingController _nameEditingController = TextEditingController();
-  final TextEditingController _amountEditingController =
-      TextEditingController();
-  final TextEditingController _customUnitEditingController =
-      TextEditingController();
-
-  @override
-  void initState() {
-    super.initState();
-    _nameEditingController.text = widget.ingredient.name;
-    _amountEditingController.text = widget.ingredient.amount;
-    _customUnitEditingController.text = widget.ingredient.customUnit;
-  }
-
   @override
   Widget build(BuildContext context) {
     return RoundedContainer(
@@ -50,36 +36,41 @@ class _EditIngredientState extends State<EditIngredient> {
             label: 'Ingredient',
             onChanged: (name) => widget.ingredient.name = name,
           ),
-          const SizedBox(height: ViewConstants.smallPadding / 2),
-          CustomTextField(
-            text: widget.ingredient.amount,
-            label: 'Amount',
-            onChanged: (amount) => widget.ingredient.amount = amount,
-          ),
           const SizedBox(height: ViewConstants.smallPadding),
-          DropdownButtonFormField<Unit>(
-            value: widget.ingredient.unit,
-            isExpanded: true,
-            onChanged: (unit) => setState(
-              () => widget.ingredient.unit = unit ?? Unit.none,
-            ),
-            style: GoogleFonts.comfortaa(
-              fontSize: ViewConstants.fontSize,
-              color: Colors.black,
-            ),
-            decoration: const InputDecoration(
-              labelText: 'Unit',
-            ),
-            items: Unit.values
-                .map(
-                  (unit) => DropdownMenuItem(
-                    value: unit,
-                    child: Text(unit.name),
+          Row(
+            children: [
+              Expanded(
+                child: CustomTextField(
+                  text: widget.ingredient.amount,
+                  label: 'Amount',
+                  onChanged: (amount) => widget.ingredient.amount = amount,
+                ),
+              ),
+              const SizedBox(width: ViewConstants.mediumPadding),
+              Expanded(
+                child: DropdownButtonFormField<Unit>(
+                  value: widget.ingredient.unit,
+                  onChanged: (unit) => setState(
+                    () => widget.ingredient.unit = unit ?? Unit.none,
                   ),
-                )
-                .toList(),
+                  style: GoogleFonts.comfortaa(
+                    fontSize: ViewConstants.fontSize,
+                    color: Colors.black,
+                  ),
+                  decoration: const InputDecoration(labelText: 'Unit'),
+                  items: Unit.values
+                      .map(
+                        (unit) => DropdownMenuItem(
+                          value: unit,
+                          child: Text(unit.name),
+                        ),
+                      )
+                      .toList(),
+                ),
+              ),
+            ],
           ),
-          const SizedBox(height: ViewConstants.smallPadding),
+          const SizedBox(height: ViewConstants.mediumPadding),
           widget.ingredient.unit == Unit.custom
               ? Column(
                   children: [
@@ -89,7 +80,7 @@ class _EditIngredientState extends State<EditIngredient> {
                       onChanged: (customUnit) =>
                           widget.ingredient.customUnit = customUnit,
                     ),
-                    const SizedBox(height: ViewConstants.smallPadding),
+                    const SizedBox(height: ViewConstants.mediumPadding),
                   ],
                 )
               : Container(),

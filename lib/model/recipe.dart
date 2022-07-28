@@ -40,8 +40,8 @@ class Recipe {
     var clonedRecipe = Recipe(
       name: name,
       mealTypes: List.from(mealTypes),
-      ingredients: List.from(clonedIngredients),
-      instructions: List.from(clonedInstructions),
+      ingredients: clonedIngredients,
+      instructions: clonedInstructions,
       images: List.from(images),
     );
     clonedRecipe.id = id;

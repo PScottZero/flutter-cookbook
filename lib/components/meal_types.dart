@@ -9,9 +9,6 @@ class MealTypes extends StatelessWidget {
   final Function(MealType)? toggleMealType;
   final bool editable;
 
-  bool darkTheme(BuildContext context) =>
-      MediaQuery.of(context).platformBrightness == Brightness.dark;
-
   const MealTypes({
     Key? key,
     required this.selectedMealTypes,
@@ -26,8 +23,8 @@ class MealTypes extends StatelessWidget {
       child: ListView(
         scrollDirection: Axis.horizontal,
         padding: const EdgeInsets.only(
-          left: 5,
-          right: 5,
+          left: ViewConstants.smallPadding,
+          right: ViewConstants.smallPadding,
         ),
         children: [
           MealTypePill(

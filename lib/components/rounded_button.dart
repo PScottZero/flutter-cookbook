@@ -5,18 +5,18 @@ import '../constants/view_constants.dart';
 import '../model/app_theme.dart';
 
 class RoundedButton extends StatelessWidget {
-  final String? text;
-  final IconData? icon;
   final AppTheme theme;
   final Function() onPressed;
+  final String? text;
+  final IconData? icon;
   final bool padding;
 
   const RoundedButton({
     Key? key,
-    this.text,
-    this.icon,
     required this.theme,
     required this.onPressed,
+    this.text,
+    this.icon,
     this.padding = false,
   }) : super(key: key);
 
@@ -25,9 +25,9 @@ class RoundedButton extends StatelessWidget {
     return Container(
       padding: padding
           ? const EdgeInsets.only(
-              left: ViewConstants.smallPadding,
-              right: ViewConstants.smallPadding,
-              bottom: ViewConstants.smallPadding,
+              left: ViewConstants.mediumPadding,
+              right: ViewConstants.mediumPadding,
+              bottom: ViewConstants.mediumPadding,
             )
           : null,
       constraints: BoxConstraints(maxWidth: MediaQuery.of(context).size.width),
@@ -61,7 +61,7 @@ class RoundedButton extends StatelessWidget {
                 )
               : Icon(
                   icon,
-                  size: 24,
+                  size: ViewConstants.buttonIconSize,
                   color: theme.accentColor1,
                 ),
         ),

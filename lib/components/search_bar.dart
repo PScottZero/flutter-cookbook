@@ -15,21 +15,23 @@ class SearchBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<AppModel>(
       builder: (context, model, child) => Padding(
-        padding: const EdgeInsets.all(ViewConstants.smallPadding),
+        padding: const EdgeInsets.all(ViewConstants.mediumPadding),
         child: Container(
           padding: const EdgeInsets.only(
-            left: ViewConstants.smallPadding,
+            left: ViewConstants.mediumPadding,
             right: ViewConstants.largePadding,
           ),
           width: MediaQuery.of(context).size.width,
           decoration: BoxDecoration(
             color: theme.accentColor2,
-            borderRadius: BorderRadius.circular(100),
+            borderRadius: BorderRadius.circular(
+              ViewConstants.maxBorderRadius,
+            ),
           ),
           child: Row(
             children: [
               Icon(Icons.search, color: theme.primaryColor),
-              const SizedBox(width: ViewConstants.smallPadding / 2),
+              const SizedBox(width: ViewConstants.smallPadding),
               Expanded(
                 child: CustomTextField(
                   onChanged: (search) => model.setSearchString(search),

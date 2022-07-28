@@ -28,6 +28,10 @@ class CustomScaffold extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: backgroundColor,
+      floatingActionButton: floatingActionButton,
+      bottomNavigationBar: bottomNavigationBar,
+      body: body,
       appBar: AppBar(
         title: Text(
           title,
@@ -43,10 +47,6 @@ class CustomScaffold extends StatelessWidget {
         iconTheme: IconThemeData(color: appBarTextColor),
         bottom: bottom,
       ),
-      backgroundColor: backgroundColor,
-      floatingActionButton: floatingActionButton,
-      bottomNavigationBar: bottomNavigationBar,
-      body: body,
     );
   }
 }
