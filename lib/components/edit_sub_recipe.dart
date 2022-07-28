@@ -25,11 +25,11 @@ class EditSubRecipe extends StatelessWidget {
         child: Column(
           children: [
             DropdownButtonFormField<Recipe>(
-              value: ingredient.recipeId != ''
-                  ? model.recipes
-                      .where((recipe) => ingredient.recipeId == recipe.id)
-                      .first
-                  : null,
+              value: () {
+                var matches = model.recipes
+                    .where((recipe) => ingredient.recipeId == recipe.id);
+                return matches.isNotEmpty ? matches.first : null;
+              }(),
               decoration: const InputDecoration(labelText: 'Sub-Recipe'),
               onChanged: (recipe) => ingredient.recipeId = recipe?.id,
               items: model.recipes

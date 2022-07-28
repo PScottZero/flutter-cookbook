@@ -119,7 +119,8 @@ class _RecipeViewState extends State<RecipeView> {
                                 (ingredient) => ingredient.recipeId != null
                                     ? SubRecipe(
                                         recipe: _getRecipeById(
-                                            ingredient.recipeId ?? ''),
+                                          ingredient.recipeId ?? '',
+                                        ),
                                       )
                                     : IngredientPill(
                                         ingredient: ingredient,
