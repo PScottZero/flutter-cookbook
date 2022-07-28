@@ -37,7 +37,7 @@ class AllRecipesView extends StatelessWidget {
             ),
           ],
           bottom: PreferredSize(
-            preferredSize: const Size.fromHeight(48),
+            preferredSize: const Size.fromHeight(64),
             child: SearchBar(theme: model.theme),
           ),
           body: Consumer<AppModel>(

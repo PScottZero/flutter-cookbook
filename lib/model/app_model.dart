@@ -55,8 +55,8 @@ class AppModel extends ChangeNotifier {
   AppTheme theme = themeOptions[defaultThemeIndex];
 
   AppModel() {
-    loadTestRecipes();
-    // loadRecipes();
+    // loadTestRecipes();
+    loadRecipes();
     loadTheme();
   }
 
